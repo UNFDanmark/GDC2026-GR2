@@ -19,7 +19,7 @@ public class SpawnedArrow : MonoBehaviour
         t += Time.deltaTime * 1/3 * speed;
         
         //sætter position til et punkt mellem spawn og target variablet baseret på t variablet
-        transform.position = new Vector3(transform.position.x, Mathf.Lerp(spawn.position.y, target.position.y, t), transform.position.z);
+            transform.position = new Vector3(transform.position.x, Mathf.Lerp(spawn.position.y, target.position.y, t), transform.position.z);
         if (t > 1)
         {
             //Destroy(this.gameObject);

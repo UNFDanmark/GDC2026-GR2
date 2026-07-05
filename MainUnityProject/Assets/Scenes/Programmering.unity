@@ -705,12 +705,15 @@ MonoBehaviour:
   spawnedArrow: {fileID: 1827923638466543354, guid: 7dbb2e02ee02c5a4eb091b0724946fd9, type: 3}
   nextSpawnCounter: 2
   beat: 0
-  Testnotes:
-  - columnPosition: 0
-    eightNoteCountPosition: 0
-  - columnPosition: 0
-    eightNoteCountPosition: 0
-  test: {x: 0, y: 0, z: 0}
+  columns:
+  - notesInColumn:
+    - {fileID: 0}
+  - notesInColumn:
+    - {fileID: 0}
+  - notesInColumn:
+    - {fileID: 0}
+  - notesInColumn:
+    - {fileID: 0}
   leftArrowAction:
     m_Name: Left Arrow
     m_Type: 0
@@ -718,7 +721,23 @@ MonoBehaviour:
     m_Id: cdde802d-80d9-4f2a-b2ff-ac7b962faa76
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 2fc209ef-3bc2-4464-a1ec-18af5ef62fb8
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Left Arrow
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 9415023f-4e4e-4ba8-a801-9af012bfb4f1
+      m_Path: <Keyboard>/q
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Left Arrow
+      m_Flags: 0
     m_Flags: 0
   downArrowAction:
     m_Name: Down Arrow
@@ -727,7 +746,23 @@ MonoBehaviour:
     m_Id: 7e0e384a-090d-457b-9dc2-a557fbb26c73
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0b19d509-e50a-4db0-b85a-10e6756ec776
+      m_Path: <Keyboard>/downArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Down Arrow
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 05b5bf64-c41b-4682-9646-202d907342b1
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Down Arrow
+      m_Flags: 0
     m_Flags: 0
   upArrowAction:
     m_Name: Up Arrow
@@ -736,7 +771,23 @@ MonoBehaviour:
     m_Id: 41a4e442-b799-492d-bbc4-bcb1bd2ae45c
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: febcb4a0-3d2d-4200-a4ce-f0956aa51a26
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Up Arrow
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 5318109b-f052-47e8-a92f-205a6951336c
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Up Arrow
+      m_Flags: 0
     m_Flags: 0
   rightArrowAction:
     m_Name: Right Arrow
@@ -745,7 +796,23 @@ MonoBehaviour:
     m_Id: 9a8c0305-60e8-4c03-b17a-034f38989afc
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 21154958-83db-430d-a9d0-20658a668220
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Right Arrow
+      m_Flags: 0
+    - m_Name: 
+      m_Id: b7adab46-72c7-419b-a3e0-c109d14ab5ae
+      m_Path: <Keyboard>/r
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Right Arrow
+      m_Flags: 0
     m_Flags: 0
 --- !u!4 &797844819
 Transform:

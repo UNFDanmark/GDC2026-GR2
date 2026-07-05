@@ -11,11 +11,15 @@ using Random = System.Random;
 public class RythmManager : MonoBehaviour
 {
     [Header("Arrows")] 
-    Transform[] targetArrows;
+    public Transform[] targetArrows;
     [Space(10)] 
     
     [Header("Positions")] [SerializeField]
     Transform[] spawnLocations;
+    [Space(10)] 
+    
+    [Header("Sprites")] [SerializeField]
+    Sprite[] arrowSprites;
     [Space(10)]
     
     [SerializeField] GameObject spawnedArrow;
@@ -30,13 +34,11 @@ public class RythmManager : MonoBehaviour
     [Serializable]
     public struct SpawnedNotes
     {
-        public Transform[] notesInColumn;
+        public List<Transform> notesInColumn;
     }
+
+    public float missThreshold;
     
-    public bool[,] testy = new bool[10, 23];
-    
-    public Vector3 test;
-        
     [Header("Actions")]
     public InputAction leftArrowAction;
     public InputAction downArrowAction;
@@ -55,7 +57,22 @@ public class RythmManager : MonoBehaviour
     {
         if (leftArrowAction.WasPressedThisFrame())
         {
-            
+            HitNote(0);
+        }
+
+        if (downArrowAction.WasPressedThisFrame())
+        {
+            HitNote(1);
+        }
+
+        if (upArrowAction.WasPressedThisFrame())
+        {
+            HitNote(2);
+        }
+
+        if (rightArrowAction.WasPressedThisFrame())
+        {
+            HitNote(3);
         }
     }
 
@@ -64,7 +81,7 @@ public class RythmManager : MonoBehaviour
         beat += 1;
         if (nextSpawnCounter <= 0)
         {
-            nextSpawnCounter = 20;
+            nextSpawnCounter = 5;
             CreateNote();
         }
         else
@@ -79,21 +96,16 @@ public class RythmManager : MonoBehaviour
         GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, Quaternion.identity);
         newSpawnedArrow.GetComponent<SpawnedArrow>().target = targetArrows[arrowType];
         newSpawnedArrow.GetComponent<SpawnedArrow>().spawn = spawnLocations[arrowType];
-        if (arrowType == 1)
-        {
-            columns[0].notesInColumn.Append(newSpawnedArrow);
-        }
-        if (arrowType == 2)
-        {
-            
-        }
-        if (arrowType == 3)
-        {
-            
-        }
-        if (arrowType == 4)
-        {
-            
-        }
+        columns[arrowType].notesInColumn.Add(newSpawnedArrow.transform);
+        //assign sprite 
+    }
+
+    private void HitNote(int column)
+    {
+        float distance;
+        distance = columns[column].notesInColumn[0].position.y - targetArrows[0].position.y;
+        Destroy(columns[column].notesInColumn[0].gameObject);
+        columns[column].notesInColumn.RemoveAt(0);
+        Debug.Log(distance);
     }
 }
