@@ -8,11 +8,13 @@ public class SpawnedArrow : MonoBehaviour
     public Transform spawn;
     public Transform target;
     public Transform tomb;
-    float t;
+    public float t;
+    public float t2;
 
     void Start()
     {
         t = 0;
+        t2 = 0;
     }
 
     void Update()
@@ -21,17 +23,21 @@ public class SpawnedArrow : MonoBehaviour
         
         //sætter position til et punkt mellem spawn og target variablet baseret på t variablet
         transform.position = new Vector3(transform.position.x, Mathf.Lerp(spawn.position.y, target.position.y, t), Mathf.Lerp(spawn.position.z, target.position.z, t));
+        if (t > 1)
+        {
+            onFinalDestination();
+        }
     }
 
     private void onFinalDestination()
     {
-        t += Time.deltaTime * 2 * speed;
-
-        transform.position = new Vector3(transform.position.x, Mathf.Lerp(target.position.y, tomb.position.y, t),
-            Mathf.Lerp(target.position.z, tomb.position.z, t));
+        t2 += Time.deltaTime * 1.02054f * speed;
         
-        if (t > 1)
+        transform.position = new Vector3(transform.position.x, Mathf.Lerp(target.position.y, tomb.position.y, t2), Mathf.Lerp(target.position.z, tomb.position.z, t2));
+        
+        if (t2 > 1)
         {
+            //Give negative score
             Destroy(this.gameObject);
         }
     }
