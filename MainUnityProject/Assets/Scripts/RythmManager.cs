@@ -1,16 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = System.Random;
 
 public class RythmManager : MonoBehaviour
 {
-    
+    #region Variables
+
     [Header("Positions")] [SerializeField]
     public Transform[] targetArrows;
     public Transform[] spawnLocations;
@@ -46,6 +42,8 @@ public class RythmManager : MonoBehaviour
 
     [Space(10)] [Header("Uncategorized")] [SerializeField]
     Transform mainCamera;
+    
+    #endregion
     
     void Start()
     {
@@ -96,12 +94,14 @@ public class RythmManager : MonoBehaviour
     {
         int arrowType = UnityEngine.Random.Range(0, 4);
         GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, Quaternion.identity);
-        newSpawnedArrow.GetComponent<SpawnedArrow>().target = targetArrows[arrowType];
-        newSpawnedArrow.GetComponent<SpawnedArrow>().spawn = spawnLocations[arrowType];
-        newSpawnedArrow.GetComponent<SpawnedArrow>().tomb = tombStones[arrowType];
-        columns[arrowType].notesInColumn.Add(newSpawnedArrow.transform);
-        newSpawnedArrow.transform.SetParent(mainCamera);
+        SpawnedArrow newSpawnedArrowScript = newSpawnedArrow.GetComponent<SpawnedArrow>();
+        
+        newSpawnedArrowScript.target = targetArrows[arrowType];
+        newSpawnedArrowScript.spawn = spawnLocations[arrowType];
+        newSpawnedArrowScript.tomb = tombStones[arrowType];
         newSpawnedArrow.GetComponent<SpriteRenderer>().sprite = arrowSprites[arrowType];
+        newSpawnedArrow.transform.SetParent(mainCamera);
+        columns[arrowType].notesInColumn.Add(newSpawnedArrow.transform);
     }
 
     private void HitNote(int column)
@@ -112,7 +112,21 @@ public class RythmManager : MonoBehaviour
         columns[column].notesInColumn.RemoveAt(0);
         Debug.Log(distance);
     }
+
+    private float CalculateScore()
+    {
+        float finalScore = 0;
+        
+        //Insert crazy matematik
+        
+        return finalScore;
+    }
 }
+
+
+
+
+
 
 
 
