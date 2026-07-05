@@ -10,12 +10,11 @@ using Random = System.Random;
 
 public class RythmManager : MonoBehaviour
 {
-    [Header("Arrows")] 
-    public Transform[] targetArrows;
-    [Space(10)] 
     
     [Header("Positions")] [SerializeField]
-    Transform[] spawnLocations;
+    public Transform[] targetArrows;
+    public Transform[] spawnLocations;
+    public Transform[] tombStones;
     [Space(10)] 
     
     [Header("Sprites")] [SerializeField]
@@ -44,6 +43,9 @@ public class RythmManager : MonoBehaviour
     public InputAction downArrowAction;
     public InputAction upArrowAction;
     public InputAction rightArrowAction;
+
+    [Space(10)] [Header("Uncategorized")] [SerializeField]
+    Transform mainCamera;
     
     void Start()
     {
@@ -93,10 +95,13 @@ public class RythmManager : MonoBehaviour
     private void CreateNote()
     {
         int arrowType = UnityEngine.Random.Range(0, 4);
-        GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, Quaternion.identity);
+        GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, spawnLocations[arrowType].rotation);
         newSpawnedArrow.GetComponent<SpawnedArrow>().target = targetArrows[arrowType];
         newSpawnedArrow.GetComponent<SpawnedArrow>().spawn = spawnLocations[arrowType];
+        newSpawnedArrow.GetComponent<SpawnedArrow>().tomb = tombStones[arrowType];
+        newSpawnedArrow.transform.rotation = targetArrows[arrowType].rotation;
         columns[arrowType].notesInColumn.Add(newSpawnedArrow.transform);
+        newSpawnedArrow.transform.SetParent(mainCamera);
         //assign sprite 
     }
 
