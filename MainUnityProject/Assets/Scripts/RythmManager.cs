@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,11 +43,24 @@ public class RythmManager : MonoBehaviour
 
     [Space(10)] [Header("Uncategorized")] [SerializeField]
     Transform mainCamera;
+
+    public float perfectThreshold;
+    public float goodThreshold;
+    public float okayThreshold;
+    public float badThreshold;
+
+    public float perfectMultiplier;
+    public float goodMultiplier;
+    public float okayMultiplier;
+    public float badMultiplier;
+
+    public float totalScore;
     
     #endregion
     
     void Start()
     {
+        print(columns.Length);
         leftArrowAction.Enable();
         downArrowAction.Enable();
         upArrowAction.Enable();
@@ -56,24 +70,25 @@ public class RythmManager : MonoBehaviour
     void Update()
     {
         if (leftArrowAction.WasPressedThisFrame())
-        {
-            HitNote(0);
-        }
+        { HitNote(0); }
 
         if (downArrowAction.WasPressedThisFrame())
-        {
-            HitNote(1);
-        }
+        { HitNote(1); }
 
         if (upArrowAction.WasPressedThisFrame())
-        {
-            HitNote(2);
-        }
+        { HitNote(2); }
 
         if (rightArrowAction.WasPressedThisFrame())
+        { HitNote(3); }
+        
+        for (int i = 0; 0 < columns.Length -1; i++)
         {
-            HitNote(3);
+            if (columns[i].notesInColumn.Count -1 > 0 && columns[i].notesInColumn[0] == null )
+            {
+                columns[i].notesInColumn.RemoveAt(0);
+            }
         }
+        
     }
 
     void FixedUpdate()
@@ -109,16 +124,39 @@ public class RythmManager : MonoBehaviour
         float distance;
         distance = columns[column].notesInColumn[0].position.y - targetArrows[0].position.y;
         Destroy(columns[column].notesInColumn[0].gameObject);
-        columns[column].notesInColumn.RemoveAt(0);
+        CalculateScore(distance);
         Debug.Log(distance);
     }
 
-    private float CalculateScore()
+    private float CalculateScore(float distance)
     {
         float finalScore = 0;
+        float usedMultiplier = 0;
+        
+        if (distance < perfectThreshold || perfectThreshold * -1 < distance)
+        {
+            usedMultiplier = perfectMultiplier;
+        } else if (distance < goodThreshold || goodThreshold * -1 < distance)
+        {
+            usedMultiplier = goodMultiplier;
+        } else if(distance < okayThreshold || okayThreshold * -1 < distance)
+        {
+            usedMultiplier = okayMultiplier;
+        } else if (distance < badThreshold || badThreshold * -1 < distance)
+        {
+            usedMultiplier = badMultiplier;
+        }
+        else
+        {
+            //miss
+        }
+
+        finalScore = 1 * usedMultiplier;
         
         //Insert crazy matematik
-        
+
+
+        totalScore += finalScore;
         return finalScore;
     }
 }
