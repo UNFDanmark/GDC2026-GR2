@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using NUnit.Framework;
 using Unity.VisualScripting;
@@ -10,7 +11,7 @@ using Random = System.Random;
 public class RythmManager : MonoBehaviour
 {
     [Header("Arrows")] 
-    [SerializeField] Transform[] targetArrows;
+    Transform[] targetArrows;
     [Space(10)] 
     
     [Header("Positions")] [SerializeField]
@@ -20,10 +21,20 @@ public class RythmManager : MonoBehaviour
     [SerializeField] GameObject spawnedArrow;
 
     [SerializeField] int nextSpawnCounter;
-    
-    //Note Management
-    public Note[] Testnotes;
 
+    public int beat;
+
+    [SerializeField]
+    public SpawnedNotes[] columns;
+
+    [Serializable]
+    public struct SpawnedNotes
+    {
+        public Transform[] notesInColumn;
+    }
+    
+    public bool[,] testy = new bool[10, 23];
+    
     public Vector3 test;
         
     [Header("Actions")]
@@ -40,8 +51,17 @@ public class RythmManager : MonoBehaviour
         rightArrowAction.Enable();
     }
 
+    void Update()
+    {
+        if (leftArrowAction.WasPressedThisFrame())
+        {
+            
+        }
+    }
+
     void FixedUpdate()
     {
+        beat += 1;
         if (nextSpawnCounter <= 0)
         {
             nextSpawnCounter = 20;
@@ -59,5 +79,21 @@ public class RythmManager : MonoBehaviour
         GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, Quaternion.identity);
         newSpawnedArrow.GetComponent<SpawnedArrow>().target = targetArrows[arrowType];
         newSpawnedArrow.GetComponent<SpawnedArrow>().spawn = spawnLocations[arrowType];
+        if (arrowType == 1)
+        {
+            columns[0].notesInColumn.Append(newSpawnedArrow);
+        }
+        if (arrowType == 2)
+        {
+            
+        }
+        if (arrowType == 3)
+        {
+            
+        }
+        if (arrowType == 4)
+        {
+            
+        }
     }
 }

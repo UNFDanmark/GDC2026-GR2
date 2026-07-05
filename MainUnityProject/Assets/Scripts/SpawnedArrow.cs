@@ -22,7 +22,7 @@ public class SpawnedArrow : MonoBehaviour
         transform.position = new Vector3(transform.position.x, Mathf.Lerp(spawn.position.y, target.position.y, t), transform.position.z);
         if (t > 1)
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
 }

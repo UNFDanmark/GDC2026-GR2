@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2968643142630166921}
   - component: {fileID: 4926887422257976798}
   - component: {fileID: 63345608746358642}
+  - component: {fileID: -1437033742822668579}
   m_Layer: 0
   m_Name: SpawnedArrow
   m_TagString: Note
@@ -108,3 +109,24 @@ MonoBehaviour:
   speed: 3
   spawn: {fileID: 0}
   target: {fileID: 0}
+--- !u!135 &-1437033742822668579
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827923638466543354}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: 0, y: 0, z: 0}
