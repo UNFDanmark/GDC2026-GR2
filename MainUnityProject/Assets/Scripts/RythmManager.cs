@@ -95,14 +95,13 @@ public class RythmManager : MonoBehaviour
     private void CreateNote()
     {
         int arrowType = UnityEngine.Random.Range(0, 4);
-        GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, spawnLocations[arrowType].rotation);
+        GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, Quaternion.identity);
         newSpawnedArrow.GetComponent<SpawnedArrow>().target = targetArrows[arrowType];
         newSpawnedArrow.GetComponent<SpawnedArrow>().spawn = spawnLocations[arrowType];
         newSpawnedArrow.GetComponent<SpawnedArrow>().tomb = tombStones[arrowType];
-        newSpawnedArrow.transform.rotation = targetArrows[arrowType].rotation;
         columns[arrowType].notesInColumn.Add(newSpawnedArrow.transform);
         newSpawnedArrow.transform.SetParent(mainCamera);
-        //assign sprite 
+        newSpawnedArrow.GetComponent<SpriteRenderer>().sprite = arrowSprites[arrowType];
     }
 
     private void HitNote(int column)
@@ -114,3 +113,13 @@ public class RythmManager : MonoBehaviour
         Debug.Log(distance);
     }
 }
+
+
+
+
+
+
+
+//Wall of Shame
+
+// newSpawnedArrow.transform.rotation = targetArrows[arrowType].rotation;
