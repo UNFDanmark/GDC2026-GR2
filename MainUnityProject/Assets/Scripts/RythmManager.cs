@@ -56,6 +56,8 @@ public class RythmManager : MonoBehaviour
 
     public float totalScore;
     
+    
+    
     #endregion
     
     void Start()
@@ -96,7 +98,7 @@ public class RythmManager : MonoBehaviour
         beat += 1;
         if (nextSpawnCounter <= 0)
         {
-            nextSpawnCounter = 5;
+            nextSpawnCounter = 2;
             CreateNote();
         }
         else
@@ -153,9 +155,6 @@ public class RythmManager : MonoBehaviour
 
         finalScore = 1 * usedMultiplier;
         
-        //Insert crazy matematik
-
-
         totalScore += finalScore;
         return finalScore;
     }
