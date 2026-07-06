@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class RythmManager : MonoBehaviour
 {
+    public static RythmManager instance;
+    
     #region Variables
 
     [Header("Positions")] [SerializeField]
@@ -38,8 +40,6 @@ public class RythmManager : MonoBehaviour
     {
         public List<Transform> notesInColumn;
     }
-
-    public float missThreshold;
     
     [Header("Actions")]
     public InputAction leftArrowAction;
@@ -50,22 +50,37 @@ public class RythmManager : MonoBehaviour
     [Space(10)] [Header("Uncategorized")] [SerializeField]
     Transform mainCamera;
 
-    public float perfectThreshold;
-    public float goodThreshold;
-    public float okayThreshold;
-    public float badThreshold;
+    [SerializeField]float perfectThreshold;
+    [SerializeField]float goodThreshold;
+    [SerializeField]float okayThreshold;
+    [SerializeField]float badThreshold;
+    [SerializeField]float missThreshold;
 
-    public float perfectMultiplier;
-    public float goodMultiplier;
-    public float okayMultiplier;
-    public float badMultiplier;
+    [SerializeField]float perfectMultiplier;
+    [SerializeField]float goodMultiplier;
+    [SerializeField]float okayMultiplier;
+    [SerializeField]float badMultiplier;
+    
+    [SerializeField] float missPenalty;
 
     public float totalScore;
     
     
     
     #endregion
-    
+
+    void Awake()
+    {
+        if (instance == this || instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     void Start()
     {
         print(columns.Length);
@@ -82,16 +97,28 @@ public class RythmManager : MonoBehaviour
     void Update()
     {
         if (leftArrowAction.WasPressedThisFrame())
-        { HitNote(0); }
+        {
+            baseArrowAnimators[0].SetTrigger("hit");
+            HitNote(0); 
+        }
 
         if (downArrowAction.WasPressedThisFrame())
-        { HitNote(1); }
+        {
+            baseArrowAnimators[1].SetTrigger("hit");
+            HitNote(1);
+        }
 
         if (upArrowAction.WasPressedThisFrame())
-        { HitNote(2); }
+        {
+            baseArrowAnimators[2].SetTrigger("hit");
+            HitNote(2); 
+        }
 
         if (rightArrowAction.WasPressedThisFrame())
-        { HitNote(3); }
+        {
+            baseArrowAnimators[3].SetTrigger("hit");
+            HitNote(3);
+        }
         
         for (int i = 0; 0 < columns.Length -1; i++)
         {
@@ -134,44 +161,99 @@ public class RythmManager : MonoBehaviour
     private void HitNote(int column)
     {
         float distance;
-        distance = columns[column].notesInColumn[0].position.y - targetArrows[0].position.y;
-        Destroy(columns[column].notesInColumn[0].gameObject);
-        baseArrowAnimators[column].SetTrigger("hit");
-        //Play a sound cuz its cool
-        //also one for missing
-        CalculateScore(distance, column);
-        Debug.Log(distance);
+        if (columns[column].notesInColumn.Count > 0)
+        {
+            distance = columns[column].notesInColumn[0].position.y - targetArrows[0].position.y;
+            if(CalculateScore(distance, column) != 0)
+            {
+                Destroy(columns[column].notesInColumn[0].gameObject);
+                CalculateScore(distance, column);
+                Debug.Log(distance);
+            }
+        }
+        else
+        {
+            OnMiss();
+        }
+        
     }
+    
     
     private float CalculateScore(float distance, int column)
     {
         float finalScore = 0;
         float usedMultiplier = 0;
-        
-        if (distance < perfectThreshold || perfectThreshold * -1 < distance)
+
+        if (distance < 0)
         {
-            usedMultiplier = perfectMultiplier;
-            baseArrowParticles[column].SetActive(false);
-            baseArrowParticles[column].SetActive(true);
-        } else if (distance < goodThreshold || goodThreshold * -1 < distance)
-        {
-            usedMultiplier = goodMultiplier;
-        } else if(distance < okayThreshold || okayThreshold * -1 < distance)
-        {
-            usedMultiplier = okayMultiplier;
-        } else if (distance < badThreshold || badThreshold * -1 < distance)
-        {
-            usedMultiplier = badMultiplier;
-        }
-        else
-        {
-            //miss
+            if (perfectThreshold * -1 < distance)
+            {
+                usedMultiplier = perfectMultiplier;
+                baseArrowParticles[column].SetActive(false);
+                baseArrowParticles[column].SetActive(true);
+                print("Perfect!");
+            } else if (goodThreshold * -1 < distance)
+            {
+                usedMultiplier = goodMultiplier;
+                baseArrowParticles[column].SetActive(false);
+                baseArrowParticles[column].SetActive(true);
+                print("Good!");
+            } else if(okayThreshold * -1 < distance)
+            {
+                usedMultiplier = okayMultiplier;
+                print("Okay");
+            } else if (badThreshold * -1 < distance)
+            {
+                usedMultiplier = badMultiplier;
+                print("Bad :(");
+            }
+            else
+            {
+                print("Do u see a ghost or what Idot");
+            }
         }
 
+        if (distance > 0)
+        {
+            if (distance < perfectThreshold)
+            {
+                usedMultiplier = perfectMultiplier;
+                baseArrowParticles[column].SetActive(false);
+                baseArrowParticles[column].SetActive(true);
+                print("Perfect!");
+            } else if (distance < goodThreshold)
+            {
+                usedMultiplier = goodMultiplier;
+                baseArrowParticles[column].SetActive(false);
+                baseArrowParticles[column].SetActive(true);
+                print("Good!");
+            } else if(distance < okayThreshold)
+            {
+                usedMultiplier = okayMultiplier;
+                print("Okay");
+            } else if (distance < badThreshold)
+            {
+                usedMultiplier = badMultiplier;
+                print("Bad :(");
+            }
+            else if (distance < missThreshold)
+            {
+                usedMultiplier = missPenalty;
+                print("FUCK YOU!");
+            }
+        }
+        
         finalScore = 1 * usedMultiplier;
         
         totalScore += finalScore;
         return finalScore;
+    }
+
+    public void OnMiss()
+    {
+        totalScore += missPenalty;
+        print("You missed, sucker!");
+        //play miss sound
     }
 }
 

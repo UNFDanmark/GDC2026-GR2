@@ -37,6 +37,7 @@ public class SpawnedArrow : MonoBehaviour
         
         if (t2 > 1)
         {
+            RythmManager.instance.OnMiss();
             //Give negative score
             Destroy(this.gameObject);
         }
