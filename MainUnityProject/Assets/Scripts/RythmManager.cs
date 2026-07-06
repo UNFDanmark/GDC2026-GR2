@@ -16,7 +16,13 @@ public class RythmManager : MonoBehaviour
     
     [Header("Sprites")] [SerializeField]
     Sprite[] arrowSprites;
-    [Space(10)]
+
+    [Space(10)] [Header("Base Arrow Animators")] [SerializeField]
+    Animator[] baseArrowAnimators;
+
+    [Space(10)] [Header("Base Arrow Particles")] [SerializeField]
+    GameObject[] baseArrowParticles;
+    
     
     [SerializeField] GameObject spawnedArrow;
 
@@ -67,6 +73,10 @@ public class RythmManager : MonoBehaviour
         downArrowAction.Enable();
         upArrowAction.Enable();
         rightArrowAction.Enable();
+        for (int i = 0; i < baseArrowParticles.Length; i++)
+        {
+            baseArrowParticles[i].SetActive(false);
+        }
     }
 
     void Update()
@@ -126,11 +136,14 @@ public class RythmManager : MonoBehaviour
         float distance;
         distance = columns[column].notesInColumn[0].position.y - targetArrows[0].position.y;
         Destroy(columns[column].notesInColumn[0].gameObject);
-        CalculateScore(distance);
+        baseArrowAnimators[column].SetTrigger("hit");
+        //Play a sound cuz its cool
+        //also one for missing
+        CalculateScore(distance, column);
         Debug.Log(distance);
     }
-
-    private float CalculateScore(float distance)
+    
+    private float CalculateScore(float distance, int column)
     {
         float finalScore = 0;
         float usedMultiplier = 0;
@@ -138,6 +151,8 @@ public class RythmManager : MonoBehaviour
         if (distance < perfectThreshold || perfectThreshold * -1 < distance)
         {
             usedMultiplier = perfectMultiplier;
+            baseArrowParticles[column].SetActive(false);
+            baseArrowParticles[column].SetActive(true);
         } else if (distance < goodThreshold || goodThreshold * -1 < distance)
         {
             usedMultiplier = goodMultiplier;

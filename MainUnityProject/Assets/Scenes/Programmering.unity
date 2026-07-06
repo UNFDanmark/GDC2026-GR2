@@ -256,6 +256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 149793985}
   - component: {fileID: 149793986}
+  - component: {fileID: 149793987}
   m_Layer: 0
   m_Name: BaseArrowDown
   m_TagString: Untagged
@@ -339,6 +340,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!95 &149793987
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149793984}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f633890153184ba46847dce7ae0d9345, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 568664712}
   - component: {fileID: 568664713}
+  - component: {fileID: 568664714}
   m_Layer: 0
   m_Name: BaseArrowRight
   m_TagString: Untagged
@@ -808,6 +832,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!95 &568664714
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568664711}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f633890153184ba46847dce7ae0d9345, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &578688797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1023,6 +1069,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 94cb15e94d51c29459c92cb62bc3c061, type: 3}
   - {fileID: 21300000, guid: 49eb3f6f33c9a2d41865ade8e1bde44c, type: 3}
   - {fileID: 21300000, guid: 0e01065a2329343499658f7c9a940166, type: 3}
+  baseArrowAnimators:
+  - {fileID: 831221343}
+  - {fileID: 149793987}
+  - {fileID: 1444394020}
+  - {fileID: 568664714}
+  baseArrowParticles:
+  - {fileID: 1944145765}
+  - {fileID: 942520284}
+  - {fileID: 2070568901}
+  - {fileID: 1911735028}
   spawnedArrow: {fileID: 1827923638466543354, guid: 7dbb2e02ee02c5a4eb091b0724946fd9, type: 3}
   nextSpawnCounter: 2
   beat: 0
@@ -1167,6 +1223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 831221341}
   - component: {fileID: 831221342}
+  - component: {fileID: 831221343}
   m_Layer: 0
   m_Name: BaseArrowLeft
   m_TagString: Untagged
@@ -1239,7 +1296,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: b620ecbe533fc1244b6a8778e0df118c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f5bc3cbe59ceb3246939c82840c107d0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1250,6 +1307,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!95 &831221343
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831221340}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f633890153184ba46847dce7ae0d9345, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1378,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &942520284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 412073078665567171, guid: fc5223e11c10e194b9df078af015bad9, type: 3}
+  m_PrefabInstance: {fileID: 390294244}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &959470739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,6 +1927,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1444394018}
   - component: {fileID: 1444394019}
+  - component: {fileID: 1444394020}
   m_Layer: 0
   m_Name: BaseArrowUp
   m_TagString: Untagged
@@ -1926,6 +2011,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!95 &1444394020
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444394017}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f633890153184ba46847dce7ae0d9345, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1877385913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2018,6 +2125,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &1911735028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 412073078665567171, guid: fc5223e11c10e194b9df078af015bad9, type: 3}
+  m_PrefabInstance: {fileID: 1148349636}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1944145765 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 412073078665567171, guid: fc5223e11c10e194b9df078af015bad9, type: 3}
+  m_PrefabInstance: {fileID: 4145603856392312140}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2041210909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,6 +2170,11 @@ Transform:
   - {fileID: 568664712}
   m_Father: {fileID: 330585546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2070568901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 412073078665567171, guid: fc5223e11c10e194b9df078af015bad9, type: 3}
+  m_PrefabInstance: {fileID: 578688797}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4145603856392312140
 PrefabInstance:
   m_ObjectHideFlags: 0
