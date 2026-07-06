@@ -75,7 +75,6 @@ public class RhythmManager : MonoBehaviour
     
     void Start()
     {
-        print(columns.Length);
         leftArrowAction.Enable();
         downArrowAction.Enable();
         upArrowAction.Enable();
