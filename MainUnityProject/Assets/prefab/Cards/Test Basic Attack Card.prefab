@@ -88,3 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ccedd5f9a92054f807e7cb44c5df7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardMovement
+  lookingForAnchor: 0
+  destination: {fileID: 0}
+  zoom: 1

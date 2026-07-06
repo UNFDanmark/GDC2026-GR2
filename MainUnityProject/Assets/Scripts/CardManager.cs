@@ -20,29 +20,30 @@ public class CardManager : MonoBehaviour
     
     [SerializeField] List<GameObject> cardLibrary;
 
-    [SerializeField] float Speed;
+    [SerializeField] float speed;
     float tOdd;
 
     float tEven;
 
     void Start()
     {
-        DrawCard(5);
+        DrawCard(2);
     }
 
-    void DrawCard(int amount)
+    public void DrawCard(int amount)
     {
         for (int i = 0; i < amount; i++)
         { 
             GameObject newDrawnCard = Instantiate(cardDeck[Random.Range(0, cardDeck.Count)], cardSource.position, Quaternion.identity);
             newDrawnCard.transform.SetParent(cardCanvas);
+            newDrawnCard.GetComponent<CardMovement>().lookingForAnchor = true;
             hand.Add(newDrawnCard);
             print("Drew 1 card");
-            moveAllCardsToAnchor();
         }
+        ReorderAllCards();
     }
 
-    void moveAllCardsToAnchor()
+    void MoveAllCardsToAnchor()
     {
         if (hand.Count % 2 == 1)
         {
@@ -50,19 +51,12 @@ public class CardManager : MonoBehaviour
             {
                 foreach (Transform anchor in oddAnchorPoints)
                 {
-                    if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false)
+                    if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
                     {
-                        for (int i = 0; cards.transform.position != anchor.position; i++)
-                        {
-                            tOdd += Time.deltaTime * Speed;
-                            cards.transform.position = new Vector3(Mathf.Lerp(cardSource.position.x, anchor.position.x, tOdd), Mathf.Lerp(cardSource.position.y, anchor.position.y, tOdd), 0);
-                        }
-
-                        if (cards.transform.position == anchor.position)
-                        {
-                            tOdd = 0;
-                        }
-                        
+                        print("yipiee tOdd");
+                        cards.GetComponent<CardMovement>().destination = anchor;
+                        cards.GetComponent<CardMovement>().lookingForAnchor = false;
+                        anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
                     } 
                 }
             }
@@ -74,27 +68,64 @@ public class CardManager : MonoBehaviour
             {
                 foreach (Transform anchor in evenAnchorPoints)
                 {
-                    if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false)
+                    if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
                     {
-                        for (int i = 0; cards.transform.position != anchor.position; i++)
-                        {
-                            tEven += Time.deltaTime * Speed;
-                            cards.transform.position = new Vector3(Mathf.Lerp(cards.transform.position.x, anchor.position.x, tEven), Mathf.Lerp(cards.transform.position.y, anchor.position.y, tEven), 0);
-                        }
-
-                        if (cards.transform.position == anchor.position)
-                        {
-                            tEven = 0;
-                        }
-                        
+                        print("yipiee tEven");
+                        cards.GetComponent<CardMovement>().destination = anchor;
+                        cards.GetComponent<CardMovement>().lookingForAnchor = false;
+                        anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
                     } 
                 }
             }
         }
     }
 
-    void moveCard()
+    void ReorderAllCards()
     {
-        
+        for (int i = 0; i < hand.Count; i++)
+        {
+            hand[i].GetComponent<CardMovement>().lookingForAnchor = true;
+            hand[i].GetComponent<CardMovement>().t = 0;
+            evenAnchorPoints[i].GetComponent<Anchor>().isClaimed = false;
+            oddAnchorPoints[i].GetComponent<Anchor>().isClaimed = false;
+        }
+        if (hand.Count % 2 == 1)
+        {
+            foreach (GameObject cards in hand)
+            {
+                foreach (Transform anchor in oddAnchorPoints)
+                {
+                    if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
+                    {
+                        print("yipiee tOdd");
+                        cards.GetComponent<CardMovement>().destination = anchor;
+                        cards.GetComponent<CardMovement>().lookingForAnchor = false;
+                        anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
+                    } 
+                }
+            }
+        }
+
+        if (hand.Count % 2 == 0)
+        {
+            foreach (GameObject cards in hand)
+            {
+                foreach (Transform anchor in evenAnchorPoints)
+                {
+                    if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
+                    {
+                        print("yipiee tEven");
+                        cards.GetComponent<CardMovement>().destination = anchor;
+                        cards.GetComponent<CardMovement>().lookingForAnchor = false;
+                        anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
+                    } 
+                }
+            }
+        }
     }
+
+    // void moveCard()
+    // {
+    //     
+    // }
 }
