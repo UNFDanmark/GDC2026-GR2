@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -63,6 +64,11 @@ public class RythmManager : MonoBehaviour
     
     [SerializeField] float missPenalty;
 
+    [SerializeField] GameObject[] performanceWords;
+    [SerializeField] Transform performanceWordSpawn;
+    [SerializeField] Transform canvas;
+    [SerializeField] float textDuration;
+     
     public float totalScore;
     
     
@@ -135,7 +141,7 @@ public class RythmManager : MonoBehaviour
         beat += 1;
         if (nextSpawnCounter <= 0)
         {
-            nextSpawnCounter = 2;
+            nextSpawnCounter = 1;
             CreateNote();
         }
         else
@@ -192,20 +198,24 @@ public class RythmManager : MonoBehaviour
                 baseArrowParticles[column].SetActive(false);
                 baseArrowParticles[column].SetActive(true);
                 print("Perfect!");
+                StartCoroutine("CreatePerformanceText", 0);
             } else if (goodThreshold * -1 < distance)
             {
                 usedMultiplier = goodMultiplier;
                 baseArrowParticles[column].SetActive(false);
                 baseArrowParticles[column].SetActive(true);
                 print("Good!");
+                StartCoroutine("CreatePerformanceText", 1);
             } else if(okayThreshold * -1 < distance)
             {
                 usedMultiplier = okayMultiplier;
                 print("Okay");
+                StartCoroutine("CreatePerformanceText", 2);
             } else if (badThreshold * -1 < distance)
             {
                 usedMultiplier = badMultiplier;
                 print("Bad :(");
+                StartCoroutine("CreatePerformanceText", 3);
             }
             else
             {
@@ -221,20 +231,27 @@ public class RythmManager : MonoBehaviour
                 baseArrowParticles[column].SetActive(false);
                 baseArrowParticles[column].SetActive(true);
                 print("Perfect!");
+                StartCoroutine("CreatePerformanceText", 0);
+                
             } else if (distance < goodThreshold)
             {
                 usedMultiplier = goodMultiplier;
                 baseArrowParticles[column].SetActive(false);
                 baseArrowParticles[column].SetActive(true);
                 print("Good!");
+                StartCoroutine("CreatePerformanceText", 1);
             } else if(distance < okayThreshold)
             {
                 usedMultiplier = okayMultiplier;
                 print("Okay");
+                StartCoroutine("CreatePerformanceText", 2);
+                
             } else if (distance < badThreshold)
             {
                 usedMultiplier = badMultiplier;
                 print("Bad :(");
+                StartCoroutine("CreatePerformanceText", 3);
+
             }
             else if (distance < missThreshold)
             {
@@ -243,7 +260,7 @@ public class RythmManager : MonoBehaviour
             }
         }
         
-        finalScore = 1 * usedMultiplier;
+        finalScore = 1 * usedMultiplier / 2;
         
         totalScore += finalScore;
         return finalScore;
@@ -254,6 +271,14 @@ public class RythmManager : MonoBehaviour
         totalScore += missPenalty;
         print("You missed, sucker!");
         //play miss sound
+    }
+
+    IEnumerator CreatePerformanceText(int wordType)
+    {
+        GameObject performanceText = Instantiate(performanceWords[wordType], performanceWordSpawn.position, Quaternion.identity);
+        performanceText.transform.SetParent(canvas);
+        yield return new WaitForSeconds(textDuration);
+        Destroy(performanceText);
     }
 }
 
