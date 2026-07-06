@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScoreText : MonoBehaviour
 {
     TextMeshProUGUI textComponent;
+    [SerializeField] RhythmManager rhythmManager;
 
     void Awake()
     {
@@ -13,6 +14,6 @@ public class ScoreText : MonoBehaviour
 
     void Update()
     {
-        textComponent.text = RythmManager.instance.totalScore.ToString();
+        textComponent.text = rhythmManager.totalScore.ToString();
     }
 }

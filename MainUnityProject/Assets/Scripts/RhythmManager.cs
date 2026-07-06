@@ -5,10 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RythmManager : MonoBehaviour
+public class RhythmManager : MonoBehaviour
 {
-    public static RythmManager instance;
-    
     #region Variables
 
     [Header("Positions")] [SerializeField]
@@ -74,19 +72,7 @@ public class RythmManager : MonoBehaviour
     
     
     #endregion
-
-    void Awake()
-    {
-        if (instance == this || instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
+    
     void Start()
     {
         print(columns.Length);
@@ -102,6 +88,13 @@ public class RythmManager : MonoBehaviour
 
     void Update()
     {
+        for (int i = 0; i < columns.Length; i++)
+        {
+            if (columns[i].notesInColumn.Count > 0 && columns[i].notesInColumn[0] == null )
+            {
+                columns[i].notesInColumn.RemoveAt(0);
+            }
+        }
         if (leftArrowAction.WasPressedThisFrame())
         {
             baseArrowAnimators[0].SetTrigger("hit");
@@ -126,13 +119,6 @@ public class RythmManager : MonoBehaviour
             HitNote(3);
         }
         
-        for (int i = 0; 0 < columns.Length -1; i++)
-        {
-            if (columns[i].notesInColumn.Count -1 > 0 && columns[i].notesInColumn[0] == null )
-            {
-                columns[i].notesInColumn.RemoveAt(0);
-            }
-        }
         
     }
 
@@ -161,6 +147,7 @@ public class RythmManager : MonoBehaviour
         newSpawnedArrowScript.tomb = tombStones[arrowType];
         newSpawnedArrow.GetComponent<SpriteRenderer>().sprite = arrowSprites[arrowType];
         newSpawnedArrow.transform.SetParent(mainCamera);
+        newSpawnedArrowScript.mother = this;
         columns[arrowType].notesInColumn.Add(newSpawnedArrow.transform);
     }
 

@@ -10,6 +10,7 @@ public class SpawnedArrow : MonoBehaviour
     public Transform tomb;
     public float t;
     public float t2;
+    public RhythmManager mother;
 
     void Start()
     {
@@ -37,7 +38,7 @@ public class SpawnedArrow : MonoBehaviour
         
         if (t2 > 1)
         {
-            RythmManager.instance.OnMiss();
+            mother.OnMiss();
             //Give negative score
             Destroy(this.gameObject);
         }

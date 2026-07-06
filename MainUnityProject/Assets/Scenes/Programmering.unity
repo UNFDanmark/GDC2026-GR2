@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 478970269}
   - component: {fileID: 478970268}
   m_Layer: 0
-  m_Name: CardPlayer
+  m_Name: CardManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -732,6 +732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc2ba2ab9e8b5d408ad7918e4fbc6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  RhythmManager: {fileID: 797844818}
 --- !u!4 &478970269
 Transform:
   m_ObjectHideFlags: 0
@@ -1155,6 +1156,14 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Left Arrow
       m_Flags: 0
+    - m_Name: 
+      m_Id: de014935-621b-47de-b382-54f43a08567b
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Left Arrow
+      m_Flags: 0
     m_Flags: 0
   downArrowAction:
     m_Name: Down Arrow
@@ -1175,6 +1184,14 @@ MonoBehaviour:
     - m_Name: 
       m_Id: 05b5bf64-c41b-4682-9646-202d907342b1
       m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Down Arrow
+      m_Flags: 0
+    - m_Name: 
+      m_Id: c5942b3f-550d-4a36-9bd6-e90c04fc0929
+      m_Path: <Keyboard>/f
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -1205,6 +1222,14 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Up Arrow
       m_Flags: 0
+    - m_Name: 
+      m_Id: e71e8059-15c2-4d0e-85c2-8884fe1e9771
+      m_Path: <Keyboard>/j
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Up Arrow
+      m_Flags: 0
     m_Flags: 0
   rightArrowAction:
     m_Name: Right Arrow
@@ -1225,6 +1250,14 @@ MonoBehaviour:
     - m_Name: 
       m_Id: b7adab46-72c7-419b-a3e0-c109d14ab5ae
       m_Path: <Keyboard>/r
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Right Arrow
+      m_Flags: 0
+    - m_Name: 
+      m_Id: cd579dcc-157a-4c52-8d2c-ce7597fb7205
+      m_Path: <Keyboard>/k
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -2738,6 +2771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6448f23c05888488d8d006cb8fe48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  rhythmManager: {fileID: 797844818}
 --- !u!114 &1879266218
 MonoBehaviour:
   m_ObjectHideFlags: 0
