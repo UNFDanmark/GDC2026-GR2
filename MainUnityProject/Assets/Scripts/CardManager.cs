@@ -25,6 +25,17 @@ public class CardManager : MonoBehaviour
 
     float tEven;
 
+    [Flags]
+    enum noteType
+    {
+        left = 1, 
+        down = 2,
+        up = 4, 
+        right = 8 
+    }
+
+    [SerializeField] noteType[] noteChart;
+    
     void Start()
     {
         DrawCard(2);
@@ -43,42 +54,7 @@ public class CardManager : MonoBehaviour
         ReorderAllCards();
     }
 
-    void MoveAllCardsToAnchor()
-    {
-        if (hand.Count % 2 == 1)
-        {
-            foreach (GameObject cards in hand)
-            {
-                foreach (Transform anchor in oddAnchorPoints)
-                {
-                    if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
-                    {
-                        print("yipiee tOdd");
-                        cards.GetComponent<CardMovement>().destination = anchor;
-                        cards.GetComponent<CardMovement>().lookingForAnchor = false;
-                        anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
-                    } 
-                }
-            }
-        }
-
-        if (hand.Count % 2 == 0)
-        {
-            foreach (GameObject cards in hand)
-            {
-                foreach (Transform anchor in evenAnchorPoints)
-                {
-                    if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
-                    {
-                        print("yipiee tEven");
-                        cards.GetComponent<CardMovement>().destination = anchor;
-                        cards.GetComponent<CardMovement>().lookingForAnchor = false;
-                        anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
-                    } 
-                }
-            }
-        }
-    }
+    
 
     void ReorderAllCards()
     {
