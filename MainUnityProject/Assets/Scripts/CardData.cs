@@ -9,7 +9,7 @@ public class CardData : MonoBehaviour
     public RhythmManager rhythmManager;
     CardManager cardManager;
     
-    [SerializeField] NoteType[] noteChart;
+    [SerializeField] public NoteType[] noteChart;
 
     [SerializeField] Sprite sprite;
 
@@ -36,22 +36,4 @@ public class CardData : MonoBehaviour
             
         }
     }
-
-    void Update()
-    {
-
-    }
-
-    public void PlayCard()
-    {
-        if (cardManager.allowedToPlayCards == true)
-        {
-            rhythmManager.notesQueue.AddRange(noteChart);
-            cardManager.hand.Remove(gameObject);
-            cardManager.ReorderAllCards();
-            Destroy(gameObject);
-        }
-    }
-
-
 }

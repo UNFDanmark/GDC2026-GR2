@@ -14,7 +14,7 @@ public class CardMovement : MonoBehaviour
     
     
     
-    bool isBeingPlayed;
+    public bool isBeingPlayed;
     
     Transform spawn;
     public bool lookingForAnchor;
@@ -26,9 +26,10 @@ public class CardMovement : MonoBehaviour
 
     CardManager cardManager;
     RhythmManager rhythmManager;
+    CombatManager combatManager;
     CardData cardData;
     Animator animator;
-    Button button;
+    public Button button;
 
     void Awake()
     {
@@ -37,6 +38,7 @@ public class CardMovement : MonoBehaviour
         button = GetComponent<Button>();
         cardManager = GameObject.FindGameObjectWithTag("CardManager").GetComponent<CardManager>();
         rhythmManager = cardData.rhythmManager;
+        combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
         t = 0;
         lookingForAnchor = true;
         spawn = transform;
@@ -75,27 +77,28 @@ public class CardMovement : MonoBehaviour
 
         if (isBeingPlayed && !button.IsHighlighted())
         {
-            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 1000, playCardT), transform.position.z);
+            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 1500, playCardT), transform.position.z);
             playCardT += Time.deltaTime * zoom;
             if (playCardT >= 1)
             {
-                cardData.PlayCard();
+                combatManager.PlayCard(this.gameObject);
             }
         }
     }
 
     public void PlayCardAnim()
     {
-        if (cardManager.playTimer <= 0 && cardManager.allowedToPlayCards && rhythmManager.columns[0].notesInColumn.Count == 0 && rhythmManager.columns[1].notesInColumn.Count == 0 && rhythmManager.columns[2].notesInColumn.Count == 0 && rhythmManager.columns[3].notesInColumn.Count == 0 )
+        if (cardManager.playTimer <= 0 && combatManager.isPlayersTurn && rhythmManager.columns[0].notesInColumn.Count == 0 && rhythmManager.columns[1].notesInColumn.Count == 0 && rhythmManager.columns[2].notesInColumn.Count == 0 && rhythmManager.columns[3].notesInColumn.Count == 0 )
         {
             cardManager.playTimer = cardManager.playTimerAmount;
             isBeingPlayed = true;
+            combatManager.isPlayersTurn = false;
         }
     }
 
     void OnMouseEnter()
     {
-        transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 100, highlightCardT), Mathf.Lerp(transform.position.z, anchorTarget.position.z + 100, highlightCardT));
+        transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 100, highlightCardT), transform.position.z);
         highlightCardT += Time.deltaTime * zoom;
     }
     public void MoveCardDown()

@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class CardManager : MonoBehaviour
 {
     [SerializeField] RhythmManager rhythmManager;
+    [SerializeField]CombatManager combatManager;
     [SerializeField] Transform cardCanvas;
 
     [SerializeField] Transform[] evenAnchorPoints;
@@ -21,9 +22,8 @@ public class CardManager : MonoBehaviour
     [SerializeField] List<GameObject> cardLibrary;
 
     [SerializeField] float speed;
-    float tOdd;
 
-    float tEven;
+    [SerializeField] float cardLoweringT;
 
     public bool allowedToPlayCards;
 
@@ -40,7 +40,12 @@ public class CardManager : MonoBehaviour
     }
 
     [SerializeField] NoteType[] noteChart;
-    
+
+    void Awake()
+    {
+        combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+    }
+
     void Start()
     {
         DrawCard(2);
@@ -49,22 +54,23 @@ public class CardManager : MonoBehaviour
     void Update()
     {
         playTimer -= Time.deltaTime;
-        if (rhythmManager.notesQueue.Count > 0)
+        foreach (GameObject card in hand)
         {
-            allowedToPlayCards = false;
-            foreach (GameObject card in hand)
+            if (!card.GetComponent<CardMovement>().lookingForAnchor && !card.GetComponent<CardMovement>().isBeingPlayed)
             {
-                
+                card.transform.position = new Vector3(card.transform.position.x, Mathf.Lerp(card.transform.position.y, card.GetComponent<CardMovement>().anchorTarget.position.y - 200, cardLoweringT), card.transform.position.z);
             }
+        }
+        if (!combatManager.isPlayersTurn)
+        {
+            cardLoweringT += Time.deltaTime;
         }
         else
         {
-            allowedToPlayCards = true;
-            foreach (GameObject card in hand)
-            {
- 
-            }
+            cardLoweringT -= Time.deltaTime;
         }
+
+        cardLoweringT = Mathf.Clamp(cardLoweringT, 0, 1);
     }
 
     public void DrawCard(int amount)
