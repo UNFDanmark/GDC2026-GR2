@@ -21,7 +21,11 @@ public class CardMovement : MonoBehaviour
     public Transform anchorTarget;
     public float zoom;
 
+    public float highLightSpeed = 0.2f;
+    public float unHighLightSpeed = 2;
+
     CardManager cardManager;
+    RhythmManager rhythmManager;
     CardData cardData;
     Animator animator;
     Button button;
@@ -29,10 +33,10 @@ public class CardMovement : MonoBehaviour
     void Awake()
     {
         isBeingPlayed = false;
-        animator = GetComponent<Animator>();
         cardData = GetComponent<CardData>();
         button = GetComponent<Button>();
         cardManager = GameObject.FindGameObjectWithTag("CardManager").GetComponent<CardManager>();
+        rhythmManager = cardData.rhythmManager;
         t = 0;
         lookingForAnchor = true;
         spawn = transform;
@@ -52,15 +56,24 @@ public class CardMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (button.IsHighlighted())
+        {
+            highlightCardT += Time.deltaTime * highLightSpeed;
+            highlightCardT = Mathf.Clamp(highlightCardT, 0, 1);
+            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 100, highlightCardT), transform.position.z);
+        }
+        else
+        {
+            highlightCardT = 0;
+        }
         
-        
-        if (!lookingForAnchor)
+        if (!lookingForAnchor && !button.IsHighlighted())
         {
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, anchorTarget.position.x, t), Mathf.Lerp(transform.position.y, anchorTarget.position.y, t), transform.position.z);
             t += Time.deltaTime * zoom;
         }
 
-        if (isBeingPlayed)
+        if (isBeingPlayed && !button.IsHighlighted())
         {
             transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 1000, playCardT), transform.position.z);
             playCardT += Time.deltaTime * zoom;
@@ -73,7 +86,7 @@ public class CardMovement : MonoBehaviour
 
     public void PlayCardAnim()
     {
-        if (cardManager.playTimer <= 0 && cardManager.allowedToPlayCards)
+        if (cardManager.playTimer <= 0 && cardManager.allowedToPlayCards && rhythmManager.columns[0].notesInColumn.Count == 0 && rhythmManager.columns[1].notesInColumn.Count == 0 && rhythmManager.columns[2].notesInColumn.Count == 0 && rhythmManager.columns[3].notesInColumn.Count == 0 )
         {
             cardManager.playTimer = cardManager.playTimerAmount;
             isBeingPlayed = true;

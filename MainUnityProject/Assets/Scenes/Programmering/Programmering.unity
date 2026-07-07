@@ -1128,6 +1128,9 @@ MonoBehaviour:
   - {fileID: 4382625751847064695, guid: d3b00318b3a509f40a2146688c0b7177, type: 3}
   cardLibrary: []
   speed: 0
+  allowedToPlayCards: 0
+  playTimerAmount: 2
+  playTimer: 0
   noteChart: 00000000
 --- !u!4 &478970269
 Transform:

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CardData : MonoBehaviour
 {
-    RhythmManager rhythmManager;
+    public RhythmManager rhythmManager;
     CardManager cardManager;
     
     [SerializeField] NoteType[] noteChart;
