@@ -46,6 +46,8 @@ public class RhythmManager : MonoBehaviour
     public InputAction upArrowAction;
     public InputAction rightArrowAction;
 
+    [Header("Cards")] [SerializeField] GameObject[] cards;
+
     [Space(10)] [Header("Uncategorized")] [SerializeField]
     Transform mainCamera;
 
@@ -66,8 +68,12 @@ public class RhythmManager : MonoBehaviour
     [SerializeField] Transform performanceWordSpawn;
     [SerializeField] Transform canvas;
     [SerializeField] float textDuration;
-     
+
+    public List<NoteType> notesQueue;
+    
     public float totalScore;
+    
+
     
     
     
@@ -87,6 +93,11 @@ public class RhythmManager : MonoBehaviour
 
     void Update()
     {
+        if (notesQueue.Count > 0)
+        {
+            
+        }
+        
         for (int i = 0; i < columns.Length; i++)
         {
             if (columns[i].notesInColumn.Count > 0 && columns[i].notesInColumn[0] == null )
@@ -124,10 +135,31 @@ public class RhythmManager : MonoBehaviour
     void FixedUpdate()
     {
         beat += 1;
+        if (notesQueue.Count > 0)
+        {
+            if (notesQueue[0].HasFlag(NoteType.down))
+            {
+                CreateNote(0);
+            }
+            if (notesQueue[0].HasFlag(NoteType.down))
+            {
+                CreateNote(1);
+            }
+            if (notesQueue[0].HasFlag(NoteType.up))
+            {
+                CreateNote(2);
+            }
+            if (notesQueue[0].HasFlag(NoteType.right))
+            {
+                CreateNote(3);
+            }
+            notesQueue.RemoveAt(0);
+        }
+        
         if (nextSpawnCounter <= 0)
         {
             nextSpawnCounter = 1;
-            CreateNote();
+            //CreateNote();
         }
         else
         {
@@ -135,9 +167,23 @@ public class RhythmManager : MonoBehaviour
         }
     }
 
-    private void CreateNote()
+    private void CreateRandomNote()
     {
         int arrowType = UnityEngine.Random.Range(0, 4);
+        GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, Quaternion.identity);
+        SpawnedArrow newSpawnedArrowScript = newSpawnedArrow.GetComponent<SpawnedArrow>();
+        
+        newSpawnedArrowScript.target = targetArrows[arrowType];
+        newSpawnedArrowScript.spawn = spawnLocations[arrowType];
+        newSpawnedArrowScript.tomb = tombStones[arrowType];
+        newSpawnedArrow.GetComponent<SpriteRenderer>().sprite = arrowSprites[arrowType];
+        newSpawnedArrow.transform.SetParent(mainCamera);
+        newSpawnedArrowScript.mother = this;
+        columns[arrowType].notesInColumn.Add(newSpawnedArrow.transform);
+    }
+    
+    private void CreateNote(int arrowType)
+    {
         GameObject newSpawnedArrow = Instantiate(spawnedArrow, spawnLocations[arrowType].position, Quaternion.identity);
         SpawnedArrow newSpawnedArrowScript = newSpawnedArrow.GetComponent<SpawnedArrow>();
         
