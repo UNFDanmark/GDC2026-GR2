@@ -14,7 +14,7 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] Transform cardSource;
 
-    [SerializeField] List<GameObject> hand;
+    public List<GameObject> hand;
     
     [SerializeField] List<GameObject> cardDeck;
     
@@ -24,6 +24,11 @@ public class CardManager : MonoBehaviour
     float tOdd;
 
     float tEven;
+
+    public bool allowedToPlayCards;
+
+    public float playTimerAmount;
+    public float playTimer = 0;
 
     [Flags]
     enum NoteType
@@ -38,11 +43,28 @@ public class CardManager : MonoBehaviour
     
     void Start()
     {
-        if (noteChart[0].HasFlag(NoteType.left))
-        {
-            
-        }
         DrawCard(2);
+    }
+
+    void Update()
+    {
+        playTimer -= Time.deltaTime;
+        if (rhythmManager.notesQueue.Count > 0)
+        {
+            allowedToPlayCards = false;
+            foreach (GameObject card in hand)
+            {
+                
+            }
+        }
+        else
+        {
+            allowedToPlayCards = true;
+            foreach (GameObject card in hand)
+            {
+ 
+            }
+        }
     }
 
     public void DrawCard(int amount)
@@ -60,7 +82,7 @@ public class CardManager : MonoBehaviour
 
     
 
-    void ReorderAllCards()
+    public void ReorderAllCards()
     {
         for (int i = 0; i < hand.Count; i++)
         {
@@ -78,7 +100,7 @@ public class CardManager : MonoBehaviour
                     if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
                     {
                         print("yipiee tOdd");
-                        cards.GetComponent<CardMovement>().destination = anchor;
+                        cards.GetComponent<CardMovement>().anchorTarget = anchor;
                         cards.GetComponent<CardMovement>().lookingForAnchor = false;
                         anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
                     } 
@@ -95,7 +117,7 @@ public class CardManager : MonoBehaviour
                     if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
                     {
                         print("yipiee tEven");
-                        cards.GetComponent<CardMovement>().destination = anchor;
+                        cards.GetComponent<CardMovement>().anchorTarget = anchor;
                         cards.GetComponent<CardMovement>().lookingForAnchor = false;
                         anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
                     } 
@@ -103,9 +125,4 @@ public class CardManager : MonoBehaviour
             }
         }
     }
-
-    // void moveCard()
-    // {
-    //     
-    // }
 }

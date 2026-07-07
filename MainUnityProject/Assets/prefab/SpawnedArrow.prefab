@@ -112,6 +112,7 @@ MonoBehaviour:
   tomb: {fileID: 0}
   t: 0
   t2: 0
+  mother: {fileID: 0}
 --- !u!135 &-1437033742822668579
 SphereCollider:
   m_ObjectHideFlags: 0

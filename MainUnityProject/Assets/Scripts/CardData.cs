@@ -1,10 +1,13 @@
 using System;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardData : MonoBehaviour
 {
     RhythmManager rhythmManager;
+    CardManager cardManager;
     
     [SerializeField] NoteType[] noteChart;
 
@@ -16,9 +19,14 @@ public class CardData : MonoBehaviour
     [SerializeField] float leechProcent;
     [SerializeField] bool hitAllNotesRequirement;
 
+    [SerializeField] Button button;
+
+    
+
     void Awake()
     {
         rhythmManager = GameObject.FindGameObjectWithTag("RhythmManager").GetComponent<RhythmManager>();
+        cardManager = GameObject.FindGameObjectWithTag("CardManager").GetComponent<CardManager>();
     }
 
     void Start()
@@ -31,11 +39,19 @@ public class CardData : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void PlayCard()
     {
-        rhythmManager.notesQueue.AddRange(noteChart);
+        if (cardManager.allowedToPlayCards == true)
+        {
+            rhythmManager.notesQueue.AddRange(noteChart);
+            cardManager.hand.Remove(gameObject);
+            cardManager.ReorderAllCards();
+            Destroy(gameObject);
+        }
     }
+
+
 }
