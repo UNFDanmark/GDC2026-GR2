@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5925340572555217806}
+  - component: {fileID: -6587973110207519646}
   - component: {fileID: 5554456102160101596}
   - component: {fileID: 7187562412989886316}
   - component: {fileID: 8825788969101775444}
@@ -38,6 +39,25 @@ RectTransform:
   m_AnchoredPosition: {x: 1568, y: 121}
   m_SizeDelta: {x: 256.93356, y: 363.39777}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &-6587973110207519646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382625751847064695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abffa59c2937d6b4fa8f1ede84396a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  noteChart: 0300000002000000000000000c00000001000000ffffffff01000000010000000400000003000000020000000000000002000000ffffffff000000000b0000000000000002000000
+  sprite: {fileID: 0}
+  damage: 0
+  healing: 0
+  block: 0
+  leechProcent: 0
+  hitAllNotesRequirement: 0
 --- !u!222 &5554456102160101596
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -88,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ccedd5f9a92054f807e7cb44c5df7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardMovement
+  t: 0
   lookingForAnchor: 0
   destination: {fileID: 0}
   zoom: 1

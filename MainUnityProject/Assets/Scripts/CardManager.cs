@@ -26,7 +26,7 @@ public class CardManager : MonoBehaviour
     float tEven;
 
     [Flags]
-    enum noteType
+    enum NoteType
     {
         left = 1, 
         down = 2,
@@ -34,10 +34,14 @@ public class CardManager : MonoBehaviour
         right = 8 
     }
 
-    [SerializeField] noteType[] noteChart;
+    [SerializeField] NoteType[] noteChart;
     
     void Start()
     {
+        if (noteChart[0].HasFlag(NoteType.left))
+        {
+            
+        }
         DrawCard(2);
     }
 

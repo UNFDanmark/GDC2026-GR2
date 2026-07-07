@@ -1,6 +1,11 @@
+using System;
+
 [System.Serializable]
-public struct Note
+[Flags]
+public enum NoteType
 {
-    public int columnPosition;
-    public int eightNoteCountPosition;
+    left = 1, 
+    down = 2,
+    up = 4, 
+    right = 8 
 }
