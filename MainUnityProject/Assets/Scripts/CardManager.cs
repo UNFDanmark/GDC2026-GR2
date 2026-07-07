@@ -117,8 +117,9 @@ public class CardManager : MonoBehaviour
                     if (anchor.gameObject.GetComponent<Anchor>().isClaimed == false && cards.GetComponent<CardMovement>().lookingForAnchor == true)
                     {
                         print("yipiee tEven");
-                        cards.GetComponent<CardMovement>().anchorTarget = anchor;
-                        cards.GetComponent<CardMovement>().lookingForAnchor = false;
+                        CardMovement tempCardMovement = cards.GetComponent<CardMovement>();
+                        tempCardMovement.anchorTarget = anchor;
+                        tempCardMovement.lookingForAnchor = false;
                         anchor.gameObject.GetComponent<Anchor>().isClaimed = true;
                     } 
                 }
