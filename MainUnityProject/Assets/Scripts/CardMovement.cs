@@ -30,6 +30,7 @@ public class CardMovement : MonoBehaviour
     CardData cardData;
     Animator animator;
     public Button button;
+    public float scaleOnHighlight;
 
     void Awake()
     {
@@ -58,18 +59,21 @@ public class CardMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (button.IsHighlighted())
+        if (button.IsHighlighted() && combatManager.isPlayersTurn)
         {
             highlightCardT += Time.deltaTime * highLightSpeed;
             highlightCardT = Mathf.Clamp(highlightCardT, 0, 1);
             transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 100, highlightCardT), transform.position.z);
+            transform.localScale = new Vector3(scaleOnHighlight, scaleOnHighlight, scaleOnHighlight);
+            transform.SetAsLastSibling();
         }
         else
         {
             highlightCardT = 0;
+            transform.localScale = new Vector3(1, 1, 1);
         }
         
-        if (!lookingForAnchor && !button.IsHighlighted())
+        if (!lookingForAnchor && !button.IsHighlighted() && combatManager.isPlayersTurn)
         {
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, anchorTarget.position.x, t), Mathf.Lerp(transform.position.y, anchorTarget.position.y, t), transform.position.z);
             t += Time.deltaTime * zoom;
@@ -92,7 +96,6 @@ public class CardMovement : MonoBehaviour
         {
             cardManager.playTimer = cardManager.playTimerAmount;
             isBeingPlayed = true;
-            combatManager.isPlayersTurn = false;
         }
     }
 

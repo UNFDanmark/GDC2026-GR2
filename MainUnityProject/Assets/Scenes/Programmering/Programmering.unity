@@ -1037,7 +1037,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   rhythmManager: {fileID: 0}
   currentEnemy: {fileID: 0}
-  isPlayersTurn: 0
+  isPlayersTurn: 1
 --- !u!4 &349658209
 Transform:
   m_ObjectHideFlags: 0
@@ -1365,7 +1365,7 @@ MonoBehaviour:
   speed: 0
   cardLoweringT: 0
   allowedToPlayCards: 0
-  playTimerAmount: 100
+  playTimerAmount: 2
   playTimer: 0
   noteChart: 00000000
 --- !u!4 &478970269

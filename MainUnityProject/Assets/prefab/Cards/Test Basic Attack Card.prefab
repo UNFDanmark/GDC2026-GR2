@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abffa59c2937d6b4fa8f1ede84396a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  rhythmManager: {fileID: 0}
   noteChart: 0300000002000000000000000c00000001000000ffffffff01000000010000000400000003000000020000000000000002000000ffffffff000000000b0000000000000002000000
   sprite: {fileID: 0}
   damage: 0
@@ -114,9 +115,14 @@ MonoBehaviour:
   t: 0
   playCardT: 0
   highlightCardT: 0
+  isBeingPlayed: 0
   lookingForAnchor: 0
   anchorTarget: {fileID: 0}
   zoom: 1
+  highLightSpeed: 0.2
+  unHighLightSpeed: 2
+  button: {fileID: 0}
+  scaleOnHighlight: 2
 --- !u!114 &5846651239979275774
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -56,7 +56,7 @@ public class CardManager : MonoBehaviour
         playTimer -= Time.deltaTime;
         foreach (GameObject card in hand)
         {
-            if (!card.GetComponent<CardMovement>().lookingForAnchor && !card.GetComponent<CardMovement>().isBeingPlayed)
+            if (!combatManager.isPlayersTurn)
             {
                 card.transform.position = new Vector3(card.transform.position.x, Mathf.Lerp(card.transform.position.y, card.GetComponent<CardMovement>().anchorTarget.position.y - 200, cardLoweringT), card.transform.position.z);
             }

@@ -28,7 +28,7 @@ public class CombatManager : MonoBehaviour
         }
         else
         {
-            if (!isPlayersTurn)
+            if (!isPlayersTurn )
             {
                 cardManager.DrawCard(1);
             }
