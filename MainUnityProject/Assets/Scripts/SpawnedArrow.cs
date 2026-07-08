@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnedArrow : MonoBehaviour
 {
-    [SerializeField] float speed = 2; //must be a multiple of the fixed update time
+    public float speed = 2; //must be a multiple of the fixed update time
     public Transform spawn;
     public Transform target;
     public Transform tomb;
@@ -20,7 +20,7 @@ public class SpawnedArrow : MonoBehaviour
 
     void Update()
     {
-        t += Time.deltaTime * 1/3 * speed;
+        t += Time.deltaTime * speed;
         
         //sætter position til et punkt mellem spawn og target variablet baseret på t variablet
         transform.position = new Vector3(transform.position.x, Mathf.Lerp(spawn.position.y, target.position.y, t), Mathf.Lerp(spawn.position.z, target.position.z, t));
@@ -32,7 +32,7 @@ public class SpawnedArrow : MonoBehaviour
 
     private void onFinalDestination()
     {
-        t2 += Time.deltaTime * 1.02054f * speed;
+        t2 += Time.deltaTime * speed * 3.46969696967f;
         
         transform.position = new Vector3(transform.position.x, Mathf.Lerp(target.position.y, tomb.position.y, t2), Mathf.Lerp(target.position.z, tomb.position.z, t2));
         

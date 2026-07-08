@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +32,7 @@ public class CardMovement : MonoBehaviour
     Animator animator;
     public Button button;
     public float scaleOnHighlight;
+    public float highlightUpMovement = 150f;
 
     void Awake()
     {
@@ -63,7 +65,7 @@ public class CardMovement : MonoBehaviour
         {
             highlightCardT += Time.deltaTime * highLightSpeed;
             highlightCardT = Mathf.Clamp(highlightCardT, 0, 1);
-            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 100, highlightCardT), transform.position.z);
+            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + highlightUpMovement, highlightCardT), transform.position.z);
             transform.localScale = new Vector3(scaleOnHighlight, scaleOnHighlight, scaleOnHighlight);
             transform.SetAsLastSibling();
         }
@@ -92,10 +94,19 @@ public class CardMovement : MonoBehaviour
 
     public void PlayCardAnim()
     {
-        if (cardManager.playTimer <= 0 && combatManager.isPlayersTurn && rhythmManager.columns[0].notesInColumn.Count == 0 && rhythmManager.columns[1].notesInColumn.Count == 0 && rhythmManager.columns[2].notesInColumn.Count == 0 && rhythmManager.columns[3].notesInColumn.Count == 0 )
+        if (cardManager.playTimer <= 0 && combatManager.isPlayersTurn && !rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou)
         {
             cardManager.playTimer = cardManager.playTimerAmount;
             isBeingPlayed = true;
+            CardData newCardData = combatManager.AddComponent<CardData>();
+            newCardData.damage = cardData.damage;
+            newCardData.healing = cardData.healing;
+            newCardData.block = cardData.block;
+            newCardData.leechProcent = cardData.leechProcent;
+            newCardData.hitAllNotesRequirement = cardData.hitAllNotesRequirement;
+            newCardData.drawCards = cardData.drawCards;
+            newCardData.increaseDamage = cardData.increaseDamage;
+            newCardData.decreaseEnemyDamage = cardData.decreaseEnemyDamage;
         }
     }
 

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class CardData : MonoBehaviour
 {
+    
+    
     public RhythmManager rhythmManager;
     CardManager cardManager;
     
@@ -13,11 +15,18 @@ public class CardData : MonoBehaviour
 
     [SerializeField] Sprite sprite;
 
-    [SerializeField] float damage;
-    [SerializeField] float healing;
-    [SerializeField] bool block;
-    [SerializeField] float leechProcent;
-    [SerializeField] bool hitAllNotesRequirement;
+    public CardType cardType;
+
+    public float damage;
+    public float healing;
+    public bool block;
+    public float leechProcent;
+    public bool hitAllNotesRequirement;
+    public bool drawCards;
+    public bool increaseDamage;
+    public int increaseDamageDuration;
+    public bool decreaseEnemyDamage;
+    public int decreaseEnemyDamageDuration;
 
     [SerializeField] Button button;
 
@@ -27,13 +36,5 @@ public class CardData : MonoBehaviour
     {
         rhythmManager = GameObject.FindGameObjectWithTag("RhythmManager").GetComponent<RhythmManager>();
         cardManager = GameObject.FindGameObjectWithTag("CardManager").GetComponent<CardManager>();
-    }
-
-    void Start()
-    {
-        for (int i = 0; i < noteChart.Length; i++)
-        {
-            
-        }
     }
 }

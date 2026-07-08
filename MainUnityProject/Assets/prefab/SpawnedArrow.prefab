@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bec8d427d322b74481ddfc7436c5b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  speed: 3
+  speed: 0.9
   spawn: {fileID: 0}
   target: {fileID: 0}
   tomb: {fileID: 0}

@@ -30,6 +30,9 @@ public class CardManager : MonoBehaviour
     public float playTimerAmount;
     public float playTimer = 0;
 
+    [SerializeField] int maxHandSize = 7;
+    
+    
     [Flags]
     enum NoteType
     {
@@ -61,7 +64,7 @@ public class CardManager : MonoBehaviour
                 card.transform.position = new Vector3(card.transform.position.x, Mathf.Lerp(card.transform.position.y, card.GetComponent<CardMovement>().anchorTarget.position.y - 200, cardLoweringT), card.transform.position.z);
             }
         }
-        if (!combatManager.isPlayersTurn)
+        if (rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou == true)
         {
             cardLoweringT += Time.deltaTime;
         }
@@ -76,14 +79,17 @@ public class CardManager : MonoBehaviour
     public void DrawCard(int amount)
     {
         for (int i = 0; i < amount; i++)
-        { 
-            GameObject newDrawnCard = Instantiate(cardDeck[Random.Range(0, cardDeck.Count)], cardSource.position, Quaternion.identity);
-            newDrawnCard.transform.SetParent(cardCanvas);
-            newDrawnCard.GetComponent<CardMovement>().lookingForAnchor = true;
-            hand.Add(newDrawnCard);
-            print("Drew 1 card");
+        {
+            if (hand.Count < maxHandSize)
+            {
+                GameObject newDrawnCard = Instantiate(cardDeck[Random.Range(0, cardDeck.Count)], cardSource.position, Quaternion.identity);
+                newDrawnCard.transform.SetParent(cardCanvas);
+                newDrawnCard.GetComponent<CardMovement>().lookingForAnchor = true;
+                hand.Add(newDrawnCard);
+                print("Drew 1 card");
+            }
+            ReorderAllCards();
         }
-        ReorderAllCards();
     }
 
     
