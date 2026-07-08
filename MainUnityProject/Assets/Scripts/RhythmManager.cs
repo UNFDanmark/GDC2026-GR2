@@ -39,6 +39,8 @@ public class RhythmManager : MonoBehaviour
     {
         public List<Transform> notesInColumn;
     }
+
+    public bool isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou;
     
     [Header("Actions")]
     public InputAction leftArrowAction;
@@ -70,6 +72,9 @@ public class RhythmManager : MonoBehaviour
     [SerializeField] float textDuration;
 
     public List<NoteType> notesQueue;
+
+    public float startingNoteSpeed;
+    public float currentNoteSpeed;
     
     public float totalScore;
     
@@ -93,9 +98,14 @@ public class RhythmManager : MonoBehaviour
 
     void Update()
     {
-        if (notesQueue.Count > 0)
+        if (columns[0].notesInColumn.Count > 0 || columns[1].notesInColumn.Count > 0 ||
+            columns[2].notesInColumn.Count > 0 || columns[3].notesInColumn.Count > 0)
         {
-            
+            isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou = true;
+        }
+        else
+        {
+            isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou = false;
         }
         
         for (int i = 0; i < columns.Length; i++)
@@ -137,7 +147,7 @@ public class RhythmManager : MonoBehaviour
         beat += 1;
         if (notesQueue.Count > 0)
         {
-            if (notesQueue[0].HasFlag(NoteType.down))
+            if (notesQueue[0].HasFlag(NoteType.left))
             {
                 CreateNote(0);
             }
