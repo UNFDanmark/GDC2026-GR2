@@ -44,18 +44,14 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        health -= Mathf.RoundToInt(Mathf.Clamp(damage, 0, Single.PositiveInfinity));
+        health = Mathf.Clamp(health, 0, Single.PositiveInfinity);;
         if (health <= 0)
         {
             print("Enemy Dead");
         }
     }
 
-    public void Attack()
-    {
-        rhythmManager.notesQueue.AddRange(nextAttack.GetComponent<EnemyTestAttack>().noteChart);
-        GetNextAttack();
-    }
     
     public void GetNextAttack()
     {

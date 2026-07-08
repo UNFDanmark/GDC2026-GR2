@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnedArrow : MonoBehaviour
 {
+    //open Assets/Don't worry about it
     public float speed = 2; //must be a multiple of the fixed update time
     public Transform spawn;
     public Transform target;

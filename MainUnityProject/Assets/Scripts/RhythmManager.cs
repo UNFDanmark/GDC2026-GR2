@@ -48,10 +48,14 @@ public class RhythmManager : MonoBehaviour
     public InputAction upArrowAction;
     public InputAction rightArrowAction;
 
+    //Go to CardMovement line 67
+    
     [Header("Cards")] [SerializeField] GameObject[] cards;
 
     [Space(10)] [Header("Uncategorized")] [SerializeField]
     Transform mainCamera;
+
+    public float currentSpeed;
 
     [SerializeField]float perfectThreshold;
     [SerializeField]float goodThreshold;
@@ -77,11 +81,9 @@ public class RhythmManager : MonoBehaviour
     public float currentNoteSpeed;
     
     public float totalScore;
-    
 
-    
-    
-    
+    public float currentNoteAmount;
+
     #endregion
     
     void Start()
@@ -203,6 +205,7 @@ public class RhythmManager : MonoBehaviour
         newSpawnedArrow.GetComponent<SpriteRenderer>().sprite = arrowSprites[arrowType];
         newSpawnedArrow.transform.SetParent(mainCamera);
         newSpawnedArrowScript.mother = this;
+        newSpawnedArrowScript.speed = currentSpeed;
         columns[arrowType].notesInColumn.Add(newSpawnedArrow.transform);
     }
 
@@ -231,7 +234,7 @@ public class RhythmManager : MonoBehaviour
     {
         float finalScore = 0;
         float usedMultiplier = 0;
-
+        
         if (distance < 0)
         {
             if (perfectThreshold * -1 < distance)

@@ -64,6 +64,7 @@ public class CardMovement : MonoBehaviour
         if (button.IsHighlighted() && combatManager.isPlayersTurn)
         {
             highlightCardT += Time.deltaTime * highLightSpeed;
+            //Go to Player line 6
             highlightCardT = Mathf.Clamp(highlightCardT, 0, 1);
             transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + highlightUpMovement, highlightCardT), transform.position.z);
             transform.localScale = new Vector3(scaleOnHighlight, scaleOnHighlight, scaleOnHighlight);
@@ -107,6 +108,9 @@ public class CardMovement : MonoBehaviour
             newCardData.drawCards = cardData.drawCards;
             newCardData.increaseDamage = cardData.increaseDamage;
             newCardData.decreaseEnemyDamage = cardData.decreaseEnemyDamage;
+            newCardData.noteAmount = cardData.noteAmount;
+            newCardData.noteSpeed = cardData.noteSpeed;
+            newCardData.cardType = cardData.cardType;
         }
     }
 

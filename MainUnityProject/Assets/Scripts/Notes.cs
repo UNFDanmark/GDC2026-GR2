@@ -9,3 +9,5 @@ public enum NoteType
     up = 4, 
     right = 8 
 }
+
+//Go to RhythmManager

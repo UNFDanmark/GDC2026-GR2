@@ -27,6 +27,8 @@ public class CardData : MonoBehaviour
     public int increaseDamageDuration;
     public bool decreaseEnemyDamage;
     public int decreaseEnemyDamageDuration;
+    public int noteAmount;
+    [Range(0.5f, 2f)]public float noteSpeed;
 
     [SerializeField] Button button;
 
@@ -34,7 +36,27 @@ public class CardData : MonoBehaviour
 
     void Awake()
     {
+        noteAmount = 0;
         rhythmManager = GameObject.FindGameObjectWithTag("RhythmManager").GetComponent<RhythmManager>();
         cardManager = GameObject.FindGameObjectWithTag("CardManager").GetComponent<CardManager>();
+        for (int i = 0; i < noteChart.Length; i++)
+        {
+            if (noteChart[i].HasFlag(NoteType.left))
+            {
+                noteAmount++;
+            }
+            if (noteChart[i].HasFlag(NoteType.down))
+            {
+                noteAmount++;
+            }
+            if (noteChart[i].HasFlag(NoteType.up))
+            {
+                noteAmount++;
+            }
+            if (noteChart[i].HasFlag(NoteType.right))
+            {
+                noteAmount++;
+            }
+        }
     }
 }
