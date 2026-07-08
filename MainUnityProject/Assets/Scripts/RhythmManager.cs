@@ -84,6 +84,8 @@ public class RhythmManager : MonoBehaviour
 
     public float currentNoteAmount;
 
+    public float universalCardPlayDelay;
+    
     #endregion
     
     void Start()

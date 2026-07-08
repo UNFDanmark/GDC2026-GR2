@@ -96,7 +96,7 @@ public class CombatManager : MonoBehaviour
             rhythmManager.currentSpeed = card.GetComponent<CardData>().noteSpeed;
             cardManager.hand.Remove(card);
             cardManager.ReorderAllCards();
-            Destroy(card);
+            Destroy(card, 5);
         }
 
     }

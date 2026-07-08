@@ -12,8 +12,8 @@ public class CardMovement : MonoBehaviour
     public float playCardT;
 
     public float highlightCardT;
-    
-    
+
+    AudioManager audioManager;
     
     public bool isBeingPlayed;
     
@@ -34,17 +34,26 @@ public class CardMovement : MonoBehaviour
     public float scaleOnHighlight;
     public float highlightUpMovement = 150f;
 
+    float cardPlayDelay;
+    float cardPlayDelayAmount;
+
+    bool startCardDelayTimer;
+
     void Awake()
     {
+        
         isBeingPlayed = false;
         cardData = GetComponent<CardData>();
         button = GetComponent<Button>();
         cardManager = GameObject.FindGameObjectWithTag("CardManager").GetComponent<CardManager>();
         rhythmManager = cardData.rhythmManager;
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+        audioManager = Camera.main.gameObject.GetComponentInChildren<AudioManager>();
         t = 0;
         lookingForAnchor = true;
         spawn = transform;
+        cardPlayDelayAmount = rhythmManager.universalCardPlayDelay;
+        cardPlayDelay = cardPlayDelayAmount;
     }
 
 
@@ -56,6 +65,11 @@ public class CardMovement : MonoBehaviour
         Gizmos.DrawSphere(anchorTarget.position, 20f);
         Gizmos.DrawSphere(transform.position, 20f);
         Gizmos.DrawLine(transform.position, anchorTarget.position);
+    }
+
+    void FixedUpdate()
+    {
+        HandleTimer();
     }
 
     // Update is called once per frame
@@ -93,10 +107,23 @@ public class CardMovement : MonoBehaviour
         }
     }
 
+    void HandleTimer()
+    {
+        if (startCardDelayTimer)
+        {
+            print("timertime");
+            cardPlayDelay -= Time.deltaTime;
+            if (cardPlayDelay <= 0)
+            {
+                PlayCardAnim();
+                startCardDelayTimer = false;
+            }
+        }
+    }
+
     public void PlayCardAnim()
     {
-        if (cardManager.playTimer <= 0 && combatManager.isPlayersTurn && !rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou)
-        {
+        
             cardManager.playTimer = cardManager.playTimerAmount;
             isBeingPlayed = true;
             CardData newCardData = combatManager.AddComponent<CardData>();
@@ -111,9 +138,21 @@ public class CardMovement : MonoBehaviour
             newCardData.noteAmount = cardData.noteAmount;
             newCardData.noteSpeed = cardData.noteSpeed;
             newCardData.cardType = cardData.cardType;
-        }
+            
+            //Audio
+            audioManager.PlayCardMelody(GetComponent<CardData>().cardMelody);
+        
     }
 
+    public void ButtonPress()
+    {
+        if (cardManager.playTimer <= 0 && combatManager.isPlayersTurn && !rhythmManager
+                .isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou)
+        {
+            startCardDelayTimer = true;
+        }
+    }
+    
     void OnMouseEnter()
     {
         transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 100, highlightCardT), transform.position.z);

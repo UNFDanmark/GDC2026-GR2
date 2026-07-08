@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CardData : MonoBehaviour
 {
-    
+    public AudioClip cardMelody;
     
     public RhythmManager rhythmManager;
     CardManager cardManager;
