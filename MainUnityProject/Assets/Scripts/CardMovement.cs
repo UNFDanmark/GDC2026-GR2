@@ -84,9 +84,9 @@ public class CardMovement : MonoBehaviour
             if (playCardT >= 1 && !hasBeenPlayed)
             {
                 hasBeenPlayed = true;
-                print("should only play once");
-                
+             
             }
+            return;
         }
         
         if (cardManager.IsPrePlayersTurn)
@@ -122,16 +122,16 @@ public class CardMovement : MonoBehaviour
     {
         if (startCardDelayTimer)
         {
-            PlayCardAnim();
-            combatManager.PlayCard(this.gameObject);
-            startCardDelayTimer = false;
-            cardPlayDelay = cardPlayDelayAmount;
-            print("timertime");
+            print(cardPlayDelay);
             cardPlayDelay -= Time.deltaTime;
-            cardManager.ReorderAllCards();
             if (cardPlayDelay <= 0)
             {
+                cardManager.ReorderAllCards();
+                PlayCardAnim();
                 
+                startCardDelayTimer = false;
+                cardPlayDelay = cardPlayDelayAmount;
+               
             }
         }
     }
@@ -153,10 +153,10 @@ public class CardMovement : MonoBehaviour
             newCardData.noteAmount = cardData.noteAmount;
             newCardData.noteSpeed = cardData.noteSpeed;
             newCardData.cardType = cardData.cardType;
-            
+            combatManager.PlayCard(this.gameObject);
             
             //Audio
-            audioManager.PlayCardMelody(GetComponent<CardData>().cardMelody);
+            
         
     }
 
@@ -169,6 +169,8 @@ public class CardMovement : MonoBehaviour
             cardManager.playTimer = cardManager.playTimerAmount;
             startCardDelayTimer = true;
             isBeingPlayed = true;
+            cardManager.hand.Remove(gameObject);
+            audioManager.PlayCardMelody(GetComponent<CardData>().cardMelody);
         }
     }
 }

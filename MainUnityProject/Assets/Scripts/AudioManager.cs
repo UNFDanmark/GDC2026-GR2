@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -32,10 +33,12 @@ public class AudioManager : MonoBehaviour
         if (playNextTick)
         {
             audioSource.clip = nextAudioClipToPlay;
-            audioSource.PlayDelayed(rhythmManger.currentNoteSpeed); //LINE UPPPPPPPPKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+            audioSource.PlayDelayed(rhythmManger.universalCardPlayDelay+1);
+            print((rhythmManger.universalCardPlayDelay+rhythmManger.currentSpeed));//LINE UPPPPPPPPKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK i iont fuck with dis
             playNextTick = false;
         }
     }
+    
     //rhythmManger.universalCardPlayDelay+
     public void PlayCardMelody(AudioClip melodyToPlay)
     {

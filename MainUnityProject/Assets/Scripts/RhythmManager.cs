@@ -222,7 +222,8 @@ public class RhythmManager : MonoBehaviour
             {
                 Destroy(columns[column].notesInColumn[0].gameObject);
                 CalculateScore(distance, column);
-                Debug.Log(distance);
+                notesHit += 1;
+                //Debug.Log(distance);
             }
         }
         else
@@ -247,7 +248,6 @@ public class RhythmManager : MonoBehaviour
                 baseArrowParticles[column].SetActive(true);
                 print("Perfect!");
                 StartCoroutine("CreatePerformanceText", 0);
-                notesHit += 1;
             } else if (goodThreshold * -1 < distance)
             {
                 usedMultiplier = goodMultiplier;
@@ -255,24 +255,22 @@ public class RhythmManager : MonoBehaviour
                 baseArrowParticles[column].SetActive(true);
                 print("Good!");
                 StartCoroutine("CreatePerformanceText", 1);
-                notesHit += 1;
             } else if(okayThreshold * -1 < distance)
             {
                 usedMultiplier = okayMultiplier;
                 print("Okay");
                 StartCoroutine("CreatePerformanceText", 2);
-                notesHit += 1;
             } else if (badThreshold * -1 < distance)
             {
                 usedMultiplier = badMultiplier;
                 print("Bad :(");
                 StartCoroutine("CreatePerformanceText", 3);
-                notesHit += 1;
             }
             else
             {
                 print("Do u see a ghost or what Idot");
             }
+            
         }
 
         if (distance > 0)

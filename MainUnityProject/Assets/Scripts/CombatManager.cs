@@ -1,6 +1,6 @@
 using System;
 using Unity.Mathematics;
-using UnityEditor.SceneManagement;
+
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
@@ -168,6 +168,7 @@ public class CombatManager : MonoBehaviour
         {
             UseAgonizingAnthem(cardData, (finalScoreAverage/10)+1);
         }
+        print((finalScoreAverage/10)+1);
     }
 
     //Add new function for every card type
@@ -208,7 +209,7 @@ public class CombatManager : MonoBehaviour
     {
         print("Used DrumDraw");
         int extraCards;
-        if (multiplier > 0.4f)
+        if (multiplier > 1.3f)
         {
             extraCards = cardData.extraCardDraw;
         }
@@ -227,8 +228,9 @@ public class CombatManager : MonoBehaviour
     void UseOstinatoBeam(CardData cardData, float multiplier)
     {
         print("Used Ostinato Beam");
-        if (rhythmManager.notesHit == cardData.noteAmount)
+        if (rhythmManager.notesHit >= cardData.noteAmount)
         {
+            print($"Notes hit: {rhythmManager.notesHit} Notes required: {cardData.noteAmount}");
             print("Hit all notes for Ostinato Beam");
             currentEnemy.GetComponent<Enemy>().TakeDamage(cardData.damage);
         }
@@ -240,8 +242,9 @@ public class CombatManager : MonoBehaviour
     
     void UseMendingMelody(CardData cardData, float multiplier)
     {
+        print($"Notes hit: {rhythmManager.notesHit} Notes required: {cardData.noteAmount}");
         print("Used Mending Melody");
-        if (rhythmManager.notesHit == cardData.noteAmount)
+        if (rhythmManager.notesHit >= cardData.noteAmount)
         {
             print("Hit all notes for Mending Melody");
             player.HealPlayer(cardData.healing);
@@ -270,7 +273,7 @@ public class CombatManager : MonoBehaviour
         enemyCurrentAttack = Instantiate(currentEnemy.GetComponent<Enemy>().nextAttack);
         currentEnemy.GetComponent<Enemy>().GetNextAttack();
         rhythmManager.notesQueue.AddRange(attack.GetComponent<EnemyAttack>().noteChart);
-        enemyCurrentAttack.GetComponent<EnemyAttack>().sound.PlayDelayed(1);
+        enemyCurrentAttack.GetComponent<EnemyAttack>().sound.PlayDelayed(rhythmManager.currentSpeed);
     }
 
     private void UseEnemyAttackEffects(float finalScore)
@@ -278,14 +281,14 @@ public class CombatManager : MonoBehaviour
         float finalScoreAverage = finalScore / numberOfNotesInChart;
         print(finalScoreAverage);
         EnemyAttack enemyAttack = enemyCurrentAttack.GetComponent<EnemyAttack>();
-        //enemyAttack.damage =
+        //enemyAttack.damage 
         
         if (enemyCurrentAttack.GetComponent<EnemyAttack>().attackType.HasFlag(EnemyAttackType.basicAttack))
         {
             BasicAttack(enemyAttack ,finalScoreAverage);
         }
         
-        if (enemyCurrentAttack.GetComponent<EnemyAttack>().attackType.HasFlag(EnemyAttackType.basicAttack))
+        if (enemyCurrentAttack.GetComponent<EnemyAttack>().attackType.HasFlag(EnemyAttackType.bigAttack))
         {
             BigAttack(enemyAttack, finalScoreAverage);
         }
@@ -297,7 +300,7 @@ public class CombatManager : MonoBehaviour
 
     private void BasicAttack(EnemyAttack attackData,float finalScoreAverage)
     {
-        print("Enemy used big attack");
+        print("Enemy used normal attack");
         float totalDamage = attackData.damage / finalScoreAverage;
         totalDamage = Mathf.Clamp(totalDamage, attackData.damage / 2, attackData.damage);
         player.TakeDamage(totalDamage);

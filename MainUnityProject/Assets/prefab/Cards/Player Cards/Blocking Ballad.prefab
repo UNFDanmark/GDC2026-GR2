@@ -200,7 +200,7 @@ MonoBehaviour:
   damage: 100
   healing: 0
   maxBonusBlockIncrease: 1
-  bonusBlockIncreaseDuration: 1
+  bonusBlockIncreaseDuration: 2
   leechProcent: 0
   hitAllNotesRequirement: 0
   extraCardDraw: 0

@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]List<GameObject> bigCardDeck;
 
     int bigAttackCountdown;
-    [SerializeField] int bigAttackCountdownAmount;
+    [SerializeField] int bigAttackCountdownAmount = 3;
     
     //[Header("Sounds")] [SerializeField]
     
@@ -89,7 +89,7 @@ public class Enemy : MonoBehaviour
     public void GetNextAttack()
     {
         bigAttackCountdown -= 1;
-        if (false)//bigAttackCountdown <= 0)
+        if (bigAttackCountdown <= 0)
         {
             nextAttack = bigCardDeck[UnityEngine.Random.Range(0, bigCardDeck.Count)];
             bigAttackCountdown = bigAttackCountdownAmount;
