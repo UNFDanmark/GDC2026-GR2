@@ -39,6 +39,8 @@ public class CardMovement : MonoBehaviour
 
     bool startCardDelayTimer;
 
+    public bool hasBeenPlayed;
+
     void Awake()
     {
         
@@ -78,7 +80,6 @@ public class CardMovement : MonoBehaviour
         if (button.IsHighlighted() && combatManager.isPlayersTurn)
         {
             highlightCardT += Time.deltaTime * highLightSpeed;
-            //Go to Player line 6
             highlightCardT = Mathf.Clamp(highlightCardT, 0, 1);
             transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + highlightUpMovement, highlightCardT), transform.position.z);
             transform.localScale = new Vector3(scaleOnHighlight, scaleOnHighlight, scaleOnHighlight);
@@ -100,8 +101,10 @@ public class CardMovement : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 1500, playCardT), transform.position.z);
             playCardT += Time.deltaTime * zoom;
-            if (playCardT >= 1)
+            if (playCardT >= 1 && !hasBeenPlayed)
             {
+                hasBeenPlayed = true;
+                print("should only play once");
                 combatManager.PlayCard(this.gameObject);
             }
         }
@@ -117,6 +120,7 @@ public class CardMovement : MonoBehaviour
             {
                 PlayCardAnim();
                 startCardDelayTimer = false;
+                cardPlayDelay = cardPlayDelayAmount;
             }
         }
     }
@@ -124,8 +128,7 @@ public class CardMovement : MonoBehaviour
     public void PlayCardAnim()
     {
         
-            cardManager.playTimer = cardManager.playTimerAmount;
-            isBeingPlayed = true;
+           
             CardData newCardData = combatManager.AddComponent<CardData>();
             newCardData.damage = cardData.damage;
             newCardData.healing = cardData.healing;
@@ -149,7 +152,9 @@ public class CardMovement : MonoBehaviour
         if (cardManager.playTimer <= 0 && combatManager.isPlayersTurn && !rhythmManager
                 .isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou)
         {
+            cardManager.playTimer = cardManager.playTimerAmount;
             startCardDelayTimer = true;
+            isBeingPlayed = true;
         }
     }
     

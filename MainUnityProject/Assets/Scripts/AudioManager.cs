@@ -4,15 +4,22 @@ public class AudioManager : MonoBehaviour
 {
     AudioSource audioSource;
 
+    AudioSource musicPlayer;
+
     bool playNextTick;
 
     AudioClip nextAudioClipToPlay;
+
+    AudioClip backgroundMusic;
 
     float delay;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        musicPlayer = GetComponentInChildren<AudioSource>();
+        musicPlayer.clip = backgroundMusic;
+        musicPlayer.Play();
         audioSource = GetComponent<AudioSource>();
     }
 

@@ -91,7 +91,7 @@ public class CombatManager : MonoBehaviour
     {
         if (isPlayersTurn == true)
         {
-            numberOfNotesInChart = GetComponent<CardData>().noteAmount;
+            numberOfNotesInChart = card.GetComponent<CardData>().noteAmount;
             rhythmManager.notesQueue.AddRange(card.GetComponent<CardData>().noteChart);
             rhythmManager.currentSpeed = card.GetComponent<CardData>().noteSpeed;
             cardManager.hand.Remove(card);
@@ -138,12 +138,15 @@ public class CombatManager : MonoBehaviour
     private void PlayEnemyAttack(GameObject attack)
     {
         enemyCurrentAttack = Instantiate(currentEnemy.GetComponent<Enemy>().nextAttack);
+        currentEnemy.GetComponent<Enemy>().GetNextAttack();
+        rhythmManager.notesQueue.AddRange(attack.GetComponent<EnemyAttack>().noteChart);
+        
     }
 
     private void UseEnemyAttackEffects(float finalScore)
     {
         EnemyAttack enemyAttack = enemyCurrentAttack.GetComponent<EnemyAttack>();
-        //enemyAttack.damage
+        //enemyAttack.damage =
         
         if (enemyCurrentAttack.GetComponent<EnemyAttack>().attackType.HasFlag(EnemyAttackType.basicAttack))
         {
@@ -154,6 +157,7 @@ public class CombatManager : MonoBehaviour
 
     private void BasicAttack(EnemyAttack attackData,float finalScore)
     {
+        player.TakeDamage(2);
         print($"Enemy did {finalScore/enemyCurrentAttack.GetComponent<EnemyAttack>().damage} damage");
     }
     

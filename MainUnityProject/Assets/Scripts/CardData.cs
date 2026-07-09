@@ -36,9 +36,14 @@ public class CardData : MonoBehaviour
 
     void Awake()
     {
+        if (gameObject.tag == "CombatManager")
+        {
+            return;
+        }
         noteAmount = 0;
         rhythmManager = GameObject.FindGameObjectWithTag("RhythmManager").GetComponent<RhythmManager>();
         cardManager = GameObject.FindGameObjectWithTag("CardManager").GetComponent<CardManager>();
+        print(noteChart);
         for (int i = 0; i < noteChart.Length; i++)
         {
             if (noteChart[i].HasFlag(NoteType.left))
