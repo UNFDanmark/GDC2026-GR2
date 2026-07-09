@@ -2936,6 +2936,11 @@ MonoBehaviour:
   - {fileID: 1513566379386665646, guid: af775c663c1da8042a8923b64763bc39, type: 3}
   - {fileID: 1513566379386665646, guid: af775c663c1da8042a8923b64763bc39, type: 3}
   - {fileID: 1513566379386665646, guid: af775c663c1da8042a8923b64763bc39, type: 3}
+  bigCardDeck:
+  - {fileID: 1513566379386665646, guid: f980fb40f056b884fa7434d3d0c9ab5f, type: 3}
+  - {fileID: 1513566379386665646, guid: f980fb40f056b884fa7434d3d0c9ab5f, type: 3}
+  - {fileID: 1513566379386665646, guid: f980fb40f056b884fa7434d3d0c9ab5f, type: 3}
+  bigAttackCountdownAmount: 1
   textComponent: {fileID: 128000562}
   nextAttack: {fileID: 0}
 --- !u!4 &449028595
@@ -3006,20 +3011,8 @@ MonoBehaviour:
   cardDeck:
   - {fileID: 4382625751847064695, guid: 68a06beeb301b114a84123a8cab627a6, type: 3}
   - {fileID: 4382625751847064695, guid: 68a06beeb301b114a84123a8cab627a6, type: 3}
-  - {fileID: 4382625751847064695, guid: bfe4b92e60059a44dbd8e591837b15a3, type: 3}
-  - {fileID: 4382625751847064695, guid: bfe4b92e60059a44dbd8e591837b15a3, type: 3}
-  - {fileID: 4382625751847064695, guid: 7c5f39f1d6b343143b5a3bbbc0b39fea, type: 3}
-  - {fileID: 4382625751847064695, guid: 7c5f39f1d6b343143b5a3bbbc0b39fea, type: 3}
-  - {fileID: 4382625751847064695, guid: 454adab950f22884a8071958c9b7748a, type: 3}
-  - {fileID: 4382625751847064695, guid: 454adab950f22884a8071958c9b7748a, type: 3}
-  - {fileID: 4382625751847064695, guid: 6f2630d0e0b00ea49a960744fc4c8cbf, type: 3}
-  - {fileID: 4382625751847064695, guid: 6f2630d0e0b00ea49a960744fc4c8cbf, type: 3}
-  - {fileID: 4382625751847064695, guid: 55e8e2afe2222bc4e82302901c204c4b, type: 3}
-  - {fileID: 4382625751847064695, guid: 55e8e2afe2222bc4e82302901c204c4b, type: 3}
-  - {fileID: 4382625751847064695, guid: 2725170bc0caed146ac7262d8c9bce1e, type: 3}
-  - {fileID: 4382625751847064695, guid: 2725170bc0caed146ac7262d8c9bce1e, type: 3}
-  - {fileID: 4382625751847064695, guid: 06d2a707a39e3e846b4775dd83dd2680, type: 3}
-  - {fileID: 4382625751847064695, guid: 06d2a707a39e3e846b4775dd83dd2680, type: 3}
+  - {fileID: 4382625751847064695, guid: 68a06beeb301b114a84123a8cab627a6, type: 3}
+  - {fileID: 4382625751847064695, guid: 68a06beeb301b114a84123a8cab627a6, type: 3}
   cardLibrary: []
   speed: 0
   cardLoweringT: 0

@@ -122,15 +122,16 @@ public class CardMovement : MonoBehaviour
     {
         if (startCardDelayTimer)
         {
+            PlayCardAnim();
+            combatManager.PlayCard(this.gameObject);
+            startCardDelayTimer = false;
+            cardPlayDelay = cardPlayDelayAmount;
             print("timertime");
             cardPlayDelay -= Time.deltaTime;
             cardManager.ReorderAllCards();
             if (cardPlayDelay <= 0)
             {
-                PlayCardAnim();
                 
-                startCardDelayTimer = false;
-                cardPlayDelay = cardPlayDelayAmount;
             }
         }
     }
@@ -152,7 +153,7 @@ public class CardMovement : MonoBehaviour
             newCardData.noteAmount = cardData.noteAmount;
             newCardData.noteSpeed = cardData.noteSpeed;
             newCardData.cardType = cardData.cardType;
-            combatManager.PlayCard(this.gameObject);
+            
             
             //Audio
             audioManager.PlayCardMelody(GetComponent<CardData>().cardMelody);

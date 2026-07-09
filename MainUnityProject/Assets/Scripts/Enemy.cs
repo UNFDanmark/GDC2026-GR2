@@ -18,9 +18,15 @@ public class Enemy : MonoBehaviour
     public float attackDecrease;
     public int attackDecreaseDuration;
 
+    
+    
     [Header("Enemy Card Library")] [SerializeField]
     List<GameObject> cardDeck;
+    [SerializeField]List<GameObject> bigCardDeck;
 
+    int bigAttackCountdown;
+    [SerializeField] int bigAttackCountdownAmount;
+    
     //[Header("Sounds")] [SerializeField]
     
     
@@ -40,6 +46,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        bigAttackCountdown = bigAttackCountdownAmount;
         health = maxHealth;
         combatManager.currentEnemy = this.gameObject;
         GetNextAttack();
@@ -81,7 +88,16 @@ public class Enemy : MonoBehaviour
     
     public void GetNextAttack()
     {
-        nextAttack = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
+        bigAttackCountdown -= 1;
+        if (false)//bigAttackCountdown <= 0)
+        {
+            nextAttack = bigCardDeck[UnityEngine.Random.Range(0, bigCardDeck.Count)];
+            bigAttackCountdown = bigAttackCountdownAmount;
+        }
+        else
+        {
+            nextAttack = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
+        }
     }
 
     public void GiveDefenseDecrease(float decreaseAmount, int duration)

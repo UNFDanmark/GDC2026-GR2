@@ -12,6 +12,8 @@ public class AudioManager : MonoBehaviour
 
     AudioClip backgroundMusic;
 
+    RhythmManager rhythmManger;
+    
     float delay;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,6 +23,7 @@ public class AudioManager : MonoBehaviour
         musicPlayer.clip = backgroundMusic;
         musicPlayer.Play();
         audioSource = GetComponent<AudioSource>();
+        rhythmManger = GameObject.FindGameObjectWithTag("RhythmManager").GetComponent<RhythmManager>();
     }
 
     // Update is called once per frame
@@ -29,11 +32,11 @@ public class AudioManager : MonoBehaviour
         if (playNextTick)
         {
             audioSource.clip = nextAudioClipToPlay;
-            audioSource.PlayDelayed(delay);
+            audioSource.PlayDelayed(rhythmManger.currentNoteSpeed); //LINE UPPPPPPPPKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
             playNextTick = false;
         }
     }
-
+    //rhythmManger.universalCardPlayDelay+
     public void PlayCardMelody(AudioClip melodyToPlay)
     {
         nextAudioClipToPlay = melodyToPlay;

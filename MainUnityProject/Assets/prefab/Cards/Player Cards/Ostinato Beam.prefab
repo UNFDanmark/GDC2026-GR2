@@ -211,7 +211,7 @@ MonoBehaviour:
   decreaseEnemyDefense: 0
   decreaseEnemyDefenseDuration: 0
   noteAmount: 0
-  noteSpeed: 1
+  noteSpeed: 0.75
   button: {fileID: 5846651239979275774}
 --- !u!222 &5554456102160101596
 CanvasRenderer:

@@ -24,7 +24,7 @@ public class CombatManager : MonoBehaviour
     public int extraCardDraw;
 
     [SerializeField] float universalDelay;
-    [SerializeField] float universalDelayAmount = 3;
+    [SerializeField] float universalDelayAmount = 4;
 
     public float numberOfNotesInChart;
 
@@ -40,6 +40,7 @@ public class CombatManager : MonoBehaviour
     {
         rhythmManager = GameObject.FindGameObjectWithTag("RhythmManager").GetComponent<RhythmManager>();
         cardManager = GameObject.FindGameObjectWithTag("CardManager").GetComponent<CardManager>();
+        universalDelayAmount -= rhythmManager.currentNoteSpeed;
     }
 
     void Update()
@@ -102,8 +103,8 @@ public class CombatManager : MonoBehaviour
         if (isPlayersTurn == true)
         {
             numberOfNotesInChart = card.GetComponent<CardData>().noteAmount;
-            rhythmManager.notesQueue.AddRange(card.GetComponent<CardData>().noteChart);
             rhythmManager.currentSpeed = card.GetComponent<CardData>().noteSpeed;
+            rhythmManager.notesQueue.AddRange(card.GetComponent<CardData>().noteChart); //MAYBE THIS LINE UP???
             cardManager.hand.Remove(card);
             cardManager.IsPrePlayersTurn = false;
             Destroy(card, 5);
@@ -284,12 +285,27 @@ public class CombatManager : MonoBehaviour
             BasicAttack(enemyAttack ,finalScoreAverage);
         }
         
+        if (enemyCurrentAttack.GetComponent<EnemyAttack>().attackType.HasFlag(EnemyAttackType.basicAttack))
+        {
+            BigAttack(enemyAttack, finalScoreAverage);
+        }
+        
+        
         
         Destroy(enemyCurrentAttack);
     }
 
     private void BasicAttack(EnemyAttack attackData,float finalScoreAverage)
     {
+        print("Enemy used big attack");
+        float totalDamage = attackData.damage / finalScoreAverage;
+        totalDamage = Mathf.Clamp(totalDamage, attackData.damage / 2, attackData.damage);
+        player.TakeDamage(totalDamage);
+    }
+
+    private void BigAttack(EnemyAttack attackData, float finalScoreAverage)
+    {
+        print("Enemy used big attack");
         float totalDamage = attackData.damage / finalScoreAverage;
         totalDamage = Mathf.Clamp(totalDamage, attackData.damage / 2, attackData.damage);
         player.TakeDamage(totalDamage);

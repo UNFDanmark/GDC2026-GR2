@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6215282845927086909}
   - component: {fileID: -4083978342277545157}
   m_Layer: 0
-  m_Name: EnemyTestAttack
+  m_Name: Big Enemy Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTestAttack
   noteChart: 0800000001000000010000000400000004000000080000000000000005000000010000000000000001000000ffffffff0000000004000000040000000000000009000000000000000000000002000000
-  attackType: -1
-  damage: 100
+  attackType: 2
+  damage: 400
   amountOfNotesInChart: 19
   sound: {fileID: -4083978342277545157}
 --- !u!82 &-4083978342277545157
@@ -61,7 +61,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: cdd26161f23738f439904dccaed01388, type: 3}
+  m_Resource: {fileID: 8300000, guid: 37424812eac2a854a9dc3d7abe49d75a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
