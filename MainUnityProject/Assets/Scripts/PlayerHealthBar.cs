@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class PlayerHealthBar : MonoBehaviour
 {
-    [SerializeField] UnityEngine.UI.Image _imageToBeUnfilled;
+    [SerializeField] UnityEngine.UI.Image imageToBeUnfilled;
     Player _player;
 
     void Awake()
     {
-        _imageToBeUnfilled = GetComponent<UnityEngine.UI.Image>();
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        imageToBeUnfilled = GetComponent<UnityEngine.UI.Image>();
+        _player = GameObject.FindGameObjectWithTag("DaPlayer").GetComponent<Player>();
     }
 
     void Update()
     {
-        _imageToBeUnfilled.fillAmount = _player.health / 1000;
+        imageToBeUnfilled.fillAmount = _player.health * 0.001f;
     }
 }

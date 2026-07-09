@@ -61,11 +61,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        textComponent.text = $"Hp: {health}";
-    }
-
     public void TakeDamage(float damage)
     {
         health -= Mathf.RoundToInt((Mathf.Clamp(damage, 0, Single.PositiveInfinity)) * (defense + defenseDecrease));

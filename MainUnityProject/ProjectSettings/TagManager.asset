@@ -9,6 +9,8 @@ TagManager:
   - CardManager
   - CombatManager
   - Larve
+  - DaPlayer
+  - Enemy
   layers:
   - Default
   - TransparentFX

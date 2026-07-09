@@ -36,11 +36,7 @@ public class Player : MonoBehaviour
         combatManager.player = this;
         health = maxHealth;
     }
-
-    void Update()
-    {
-        textComponent.text = $"P HP{health}";
-    }
+    
 
     public void TurnStarted()
     {
