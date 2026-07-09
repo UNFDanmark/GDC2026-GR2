@@ -9,6 +9,11 @@ public class Enemy : MonoBehaviour
     [Header("Stats")] [SerializeField] 
     float maxHealth = 1000f;
     public float health;
+    float defense = 1;
+
+    public float defenseDecrease;
+    public int defenseDecreaseDuration;
+    
 
     public float attackDecrease;
     public int attackDecreaseDuration;
@@ -37,6 +42,15 @@ public class Enemy : MonoBehaviour
         GetNextAttack();
     }
 
+    public void DecreaseDurations()
+    {
+        defenseDecreaseDuration -= 1;
+        if (defenseDecreaseDuration <= 0)
+        {
+            defenseDecrease = 0;
+        }
+    }
+
     void Update()
     {
         textComponent.text = $"Hp: {health}";
@@ -44,7 +58,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= Mathf.RoundToInt(Mathf.Clamp(damage, 0, Single.PositiveInfinity));
+        health -= Mathf.RoundToInt((Mathf.Clamp(damage, 0, Single.PositiveInfinity)) * (defense + defenseDecrease));
         health = Mathf.Clamp(health, 0, Single.PositiveInfinity);;
         if (health <= 0)
         {
@@ -52,9 +66,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public float imaginaryDamageOnenemy(float damage) //iahwldkjbjvbkjakrhkjf
+    {
+        float damageTaken;
+
+        damageTaken = damage;
+
+        return damageTaken;
+    }
+
     
     public void GetNextAttack()
     {
         nextAttack = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
+    }
+
+    public void GiveDefenseDecrease(float decreaseAmount, int duration)
+    {
+        defenseDecrease = decreaseAmount;
+        defenseDecreaseDuration = duration + 1;
     }
 }

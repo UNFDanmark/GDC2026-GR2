@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -48,7 +49,6 @@ public class CombatManager : MonoBehaviour
         if (!rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou &&
             !isEnemyAttacking && !isPlayingPlayerRhythmGame) //play this when the enemy attack is done also
         {
-            
             isEnemyAttacking = false;
             isPlayersTurn = true;
         }
@@ -65,6 +65,7 @@ public class CombatManager : MonoBehaviour
         {
             UseCardEffects(rhythmManager.totalScore);
             rhythmManager.totalScore = 0;
+            rhythmManager.notesHit = 0;
             
             PlayEnemyAttack(currentEnemy.GetComponent<Enemy>().nextAttack); //after this is finished play the top if statement
             
@@ -77,8 +78,11 @@ public class CombatManager : MonoBehaviour
         {
             if (isEnemyAttacking == true)
             {
-                cardManager.DrawCard(1 + extraCardDraw);
+                UseEnemyAttackEffects(rhythmManager.totalScore);
                 rhythmManager.totalScore = 0;
+                rhythmManager.notesHit = 0;
+                player.TurnStarted();
+                currentEnemy.GetComponent<Enemy>().DecreaseDurations();
             }
             isEnemyAttacking = false;
             isPlayersTurn = true;
@@ -95,7 +99,7 @@ public class CombatManager : MonoBehaviour
             rhythmManager.notesQueue.AddRange(card.GetComponent<CardData>().noteChart);
             rhythmManager.currentSpeed = card.GetComponent<CardData>().noteSpeed;
             cardManager.hand.Remove(card);
-            cardManager.ReorderAllCards();
+            cardManager.IsPrePlayersTurn = false;
             Destroy(card, 5);
         }
 
@@ -119,19 +123,138 @@ public class CombatManager : MonoBehaviour
         float totalHealing = finalScore / numberOfNotesInChart * totalHealingPercent * player.bonusAttackIncrease + 1;
         if (cardData.cardType.HasFlag(CardType.powerRiff)) 
         {
-            UsePowerRiff(cardData, finalScoreAverage);
+            UsePowerRiff(cardData, (finalScoreAverage/10)+1);
         }
-        
+
+        if (cardData.cardType.HasFlag(CardType.healingTune))
+        {
+            UseHealingTheme(cardData, (finalScoreAverage/10)+1);
+        }
+
+        if (cardData.cardType.HasFlag(CardType.blockingBallad))
+        {
+            UseBlockingBallad(cardData, (finalScoreAverage/10)+1);
+        }
+
+        if (cardData.cardType.HasFlag(CardType.leechingHook))
+        {
+            UseLeechingHook(cardData, (finalScoreAverage/10)+1);
+        }
+
+        if (cardData.cardType.HasFlag(CardType.drumDraw))
+        {
+            UseDrumDraw(cardData, (finalScoreAverage/10)+1);
+        }
+
+        if (cardData.cardType.HasFlag(CardType.ostinatoBeam))
+        {
+            UseOstinatoBeam(cardData, (finalScoreAverage/10)+1);
+        }
+
+        if (cardData.cardType.HasFlag(CardType.mendingMelody))
+        {
+            UseMendingMelody(cardData, (finalScoreAverage/10)+1);
+        }
         Destroy(cardData);
+
+        if (cardData.cardType.HasFlag(CardType.agonizingAnthem))
+        {
+            UseAgonizingAnthem(cardData, (finalScoreAverage/10)+1);
+        }
     }
 
     //Add new function for every card type
     void UsePowerRiff(CardData cardData,float multiplier)
     {
         print("Used Power Riff");
-        currentEnemy.GetComponent<Enemy>().TakeDamage(cardData.damage * multiplier);
+        currentEnemy.GetComponent<Enemy>().TakeDamage(cardData.damage * multiplier-1);
     }
+
+    void UseHealingTheme(CardData cardData, float multiplier)
+    {
+        print("Used Healing Theme");
+
+        player.HealPlayer(cardData.healing * multiplier);
+    }
+
+    void UseBlockingBallad(CardData cardData, float multiplier)
+    {
+        print("Used Blocking Ballad");
+        float appliedBonusBlockIncrease = cardData.maxBonusBlockIncrease * multiplier;
+        appliedBonusBlockIncrease = Mathf.Clamp(appliedBonusBlockIncrease, 0f, cardData.maxBonusBlockIncrease);
+        
+        player.GiveBlock(appliedBonusBlockIncrease, cardData.bonusBlockIncreaseDuration);
+    }
+
+    void UseLeechingHook(CardData cardData, float multiplier)
+    {
+        print("Used Leeching Hook");
+        float damageToDeal = cardData.damage * multiplier - 1;
+        float newLeechProcent = cardData.leechProcent * multiplier - 1;
+        
+        
+        player.HealPlayer(currentEnemy.GetComponent<Enemy>().imaginaryDamageOnenemy(damageToDeal) * newLeechProcent);
+        currentEnemy.GetComponent<Enemy>().TakeDamage(cardData.damage * multiplier-1);
+    }
+
+    void UseDrumDraw(CardData cardData, float multiplier)
+    {
+        print("Used DrumDraw");
+        int extraCards;
+        if (multiplier > 0.4f)
+        {
+            extraCards = cardData.extraCardDraw;
+        }
+        else if (multiplier > 0.2)
+        {
+            extraCards = cardData.extraCardDraw - 1;
+        }
+        else
+        {
+            extraCards = 1;
+        }
+
+        player.extraCardDraw = Mathf.Clamp(extraCards, 0, cardData.extraCardDraw);
+    }
+
+    void UseOstinatoBeam(CardData cardData, float multiplier)
+    {
+        print("Used Ostinato Beam");
+        if (rhythmManager.notesHit == cardData.noteAmount)
+        {
+            print("Hit all notes for Ostinato Beam");
+            currentEnemy.GetComponent<Enemy>().TakeDamage(cardData.damage);
+        }
+        else
+        {
+            print("Didn't hit all notes for Ostinato Beam");
+        }
+    }
+    
+    void UseMendingMelody(CardData cardData, float multiplier)
+    {
+        print("Used Mending Melody");
+        if (rhythmManager.notesHit == cardData.noteAmount)
+        {
+            print("Hit all notes for Mending Melody");
+            player.HealPlayer(cardData.healing);
+        }
+        else
+        {
+            print("Didn't hit all notes for Mending Melody");
+        }
+    }
+
+    void UseAgonizingAnthem(CardData cardData, float multiplier)
+    {
+        print("Used Agonizing Anthem");
+        currentEnemy.GetComponent<Enemy>().GiveDefenseDecrease(cardData.decreaseEnemyDefense, cardData.decreaseEnemyDefenseDuration);
+    }
+    
+    
     #endregion
+    
+    
     
     #region Enemy Card Thongs
 
@@ -145,20 +268,23 @@ public class CombatManager : MonoBehaviour
 
     private void UseEnemyAttackEffects(float finalScore)
     {
+        float finalScoreAverage = finalScore / numberOfNotesInChart;
+        print(finalScoreAverage);
         EnemyAttack enemyAttack = enemyCurrentAttack.GetComponent<EnemyAttack>();
         //enemyAttack.damage =
         
         if (enemyCurrentAttack.GetComponent<EnemyAttack>().attackType.HasFlag(EnemyAttackType.basicAttack))
         {
-            BasicAttack(enemyAttack ,finalScore);
+            BasicAttack(enemyAttack ,finalScoreAverage);
         }
         Destroy(enemyCurrentAttack);
     }
 
-    private void BasicAttack(EnemyAttack attackData,float finalScore)
+    private void BasicAttack(EnemyAttack attackData,float finalScoreAverage)
     {
-        player.TakeDamage(2);
-        print($"Enemy did {finalScore/enemyCurrentAttack.GetComponent<EnemyAttack>().damage} damage");
+        float totalDamage = attackData.damage / finalScoreAverage;
+        totalDamage = Mathf.Clamp(totalDamage, attackData.damage / 2, attackData.damage);
+        player.TakeDamage(totalDamage);
     }
     
     #endregion

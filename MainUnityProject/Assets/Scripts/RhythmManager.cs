@@ -81,6 +81,7 @@ public class RhythmManager : MonoBehaviour
     public float currentNoteSpeed;
     
     public float totalScore;
+    public int notesHit;
 
     public float currentNoteAmount;
 
@@ -246,6 +247,7 @@ public class RhythmManager : MonoBehaviour
                 baseArrowParticles[column].SetActive(true);
                 print("Perfect!");
                 StartCoroutine("CreatePerformanceText", 0);
+                notesHit += 1;
             } else if (goodThreshold * -1 < distance)
             {
                 usedMultiplier = goodMultiplier;
@@ -253,16 +255,19 @@ public class RhythmManager : MonoBehaviour
                 baseArrowParticles[column].SetActive(true);
                 print("Good!");
                 StartCoroutine("CreatePerformanceText", 1);
+                notesHit += 1;
             } else if(okayThreshold * -1 < distance)
             {
                 usedMultiplier = okayMultiplier;
                 print("Okay");
                 StartCoroutine("CreatePerformanceText", 2);
+                notesHit += 1;
             } else if (badThreshold * -1 < distance)
             {
                 usedMultiplier = badMultiplier;
                 print("Bad :(");
                 StartCoroutine("CreatePerformanceText", 3);
+                notesHit += 1;
             }
             else
             {
@@ -279,6 +284,7 @@ public class RhythmManager : MonoBehaviour
                 baseArrowParticles[column].SetActive(true);
                 print("Perfect!");
                 StartCoroutine("CreatePerformanceText", 0);
+                notesHit += 1;
                 
             } else if (distance < goodThreshold)
             {
@@ -287,17 +293,19 @@ public class RhythmManager : MonoBehaviour
                 baseArrowParticles[column].SetActive(true);
                 print("Good!");
                 StartCoroutine("CreatePerformanceText", 1);
+                notesHit += 1;
             } else if(distance < okayThreshold)
             {
                 usedMultiplier = okayMultiplier;
                 print("Okay");
                 StartCoroutine("CreatePerformanceText", 2);
-                
+                notesHit += 1;
             } else if (distance < badThreshold)
             {
                 usedMultiplier = badMultiplier;
                 print("Bad :(");
                 StartCoroutine("CreatePerformanceText", 3);
+                notesHit += 1;
 
             }
             else if (distance < missThreshold)

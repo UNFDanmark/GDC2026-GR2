@@ -31,7 +31,8 @@ public class CardManager : MonoBehaviour
     public float playTimer = 0;
 
     [SerializeField] int maxHandSize = 7;
-    
+
+    public bool IsPrePlayersTurn;
     
     [Flags]
     enum NoteType
@@ -59,12 +60,12 @@ public class CardManager : MonoBehaviour
         playTimer -= Time.deltaTime;
         foreach (GameObject card in hand)
         {
-            if (!combatManager.isPlayersTurn)
+            if (!combatManager.isPlayersTurn || IsPrePlayersTurn)
             {
                 card.transform.position = new Vector3(card.transform.position.x, Mathf.Lerp(card.transform.position.y, card.GetComponent<CardMovement>().anchorTarget.position.y - 200, cardLoweringT), card.transform.position.z);
             }
         }
-        if (rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou == true)
+        if (rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou == true || IsPrePlayersTurn)
         {
             cardLoweringT += Time.deltaTime;
         }

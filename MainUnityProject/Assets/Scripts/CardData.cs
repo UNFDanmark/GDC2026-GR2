@@ -19,14 +19,17 @@ public class CardData : MonoBehaviour
 
     public float damage;
     public float healing;
-    public bool block;
+    public float maxBonusBlockIncrease;
+    public int bonusBlockIncreaseDuration;
     public float leechProcent;
     public bool hitAllNotesRequirement;
-    public bool drawCards;
-    public bool increaseDamage;
+    public int extraCardDraw;
+    public float increaseDamage;
     public int increaseDamageDuration;
-    public bool decreaseEnemyDamage;
+    public float decreaseEnemyDamage;
     public int decreaseEnemyDamageDuration;
+    public float decreaseEnemyDefense;
+    public int decreaseEnemyDefenseDuration;
     public int noteAmount;
     [Range(0.5f, 2f)]public float noteSpeed;
 

@@ -77,6 +77,23 @@ public class CardMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isBeingPlayed && !button.IsHighlighted())
+        {
+            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 1500, playCardT), transform.position.z);
+            playCardT += Time.deltaTime * zoom;
+            if (playCardT >= 1 && !hasBeenPlayed)
+            {
+                hasBeenPlayed = true;
+                print("should only play once");
+                
+            }
+        }
+        
+        if (cardManager.IsPrePlayersTurn)
+        {
+            return;
+        }
+        
         if (button.IsHighlighted() && combatManager.isPlayersTurn)
         {
             highlightCardT += Time.deltaTime * highLightSpeed;
@@ -97,17 +114,8 @@ public class CardMovement : MonoBehaviour
             t += Time.deltaTime * zoom;
         }
 
-        if (isBeingPlayed && !button.IsHighlighted())
-        {
-            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 1500, playCardT), transform.position.z);
-            playCardT += Time.deltaTime * zoom;
-            if (playCardT >= 1 && !hasBeenPlayed)
-            {
-                hasBeenPlayed = true;
-                print("should only play once");
-                combatManager.PlayCard(this.gameObject);
-            }
-        }
+        
+        
     }
 
     void HandleTimer()
@@ -116,9 +124,11 @@ public class CardMovement : MonoBehaviour
         {
             print("timertime");
             cardPlayDelay -= Time.deltaTime;
+            cardManager.ReorderAllCards();
             if (cardPlayDelay <= 0)
             {
                 PlayCardAnim();
+                
                 startCardDelayTimer = false;
                 cardPlayDelay = cardPlayDelayAmount;
             }
@@ -132,15 +142,17 @@ public class CardMovement : MonoBehaviour
             CardData newCardData = combatManager.AddComponent<CardData>();
             newCardData.damage = cardData.damage;
             newCardData.healing = cardData.healing;
-            newCardData.block = cardData.block;
+            newCardData.maxBonusBlockIncrease = cardData.maxBonusBlockIncrease;
+            newCardData.bonusBlockIncreaseDuration = cardData.bonusBlockIncreaseDuration;
             newCardData.leechProcent = cardData.leechProcent;
             newCardData.hitAllNotesRequirement = cardData.hitAllNotesRequirement;
-            newCardData.drawCards = cardData.drawCards;
+            newCardData.extraCardDraw = cardData.extraCardDraw;
             newCardData.increaseDamage = cardData.increaseDamage;
             newCardData.decreaseEnemyDamage = cardData.decreaseEnemyDamage;
             newCardData.noteAmount = cardData.noteAmount;
             newCardData.noteSpeed = cardData.noteSpeed;
             newCardData.cardType = cardData.cardType;
+            combatManager.PlayCard(this.gameObject);
             
             //Audio
             audioManager.PlayCardMelody(GetComponent<CardData>().cardMelody);
@@ -152,20 +164,10 @@ public class CardMovement : MonoBehaviour
         if (cardManager.playTimer <= 0 && combatManager.isPlayersTurn && !rhythmManager
                 .isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou)
         {
+            cardManager.IsPrePlayersTurn = true;
             cardManager.playTimer = cardManager.playTimerAmount;
             startCardDelayTimer = true;
             isBeingPlayed = true;
         }
-    }
-    
-    void OnMouseEnter()
-    {
-        transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y + 100, highlightCardT), transform.position.z);
-        highlightCardT += Time.deltaTime * zoom;
-    }
-    public void MoveCardDown()
-    {
-        transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, anchorTarget.position.y - 175, playCardT), transform.position.z);
-        playCardT += Time.deltaTime * zoom;
     }
 }
