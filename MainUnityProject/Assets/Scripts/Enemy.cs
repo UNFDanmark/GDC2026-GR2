@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Card Library")] [SerializeField]
     List<GameObject> cardDeck;
 
+    //[Header("Sounds")] [SerializeField]
+    
+    
     [Header("References")] [SerializeField]
     TextMeshProUGUI textComponent;
 

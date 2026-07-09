@@ -29,6 +29,11 @@ public class CombatManager : MonoBehaviour
     public float numberOfNotesInChart;
 
     public GameObject enemyCurrentAttack; //assign på playEnemyAttack() & DESTROY efter useEnemyEffects()
+
+    public float enemySoundDelay;
+
+
+    
     
 
     void Awake()
@@ -43,6 +48,7 @@ public class CombatManager : MonoBehaviour
         {
             universalDelay -= Time.deltaTime;
         }
+
         
         
         
@@ -263,7 +269,7 @@ public class CombatManager : MonoBehaviour
         enemyCurrentAttack = Instantiate(currentEnemy.GetComponent<Enemy>().nextAttack);
         currentEnemy.GetComponent<Enemy>().GetNextAttack();
         rhythmManager.notesQueue.AddRange(attack.GetComponent<EnemyAttack>().noteChart);
-        
+        enemyCurrentAttack.GetComponent<EnemyAttack>().sound.PlayDelayed(1);
     }
 
     private void UseEnemyAttackEffects(float finalScore)
@@ -277,6 +283,8 @@ public class CombatManager : MonoBehaviour
         {
             BasicAttack(enemyAttack ,finalScoreAverage);
         }
+        
+        
         Destroy(enemyCurrentAttack);
     }
 

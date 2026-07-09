@@ -5,4 +5,5 @@ using System;
 public enum EnemyAttackType
 {
     basicAttack = 1, 
+    cardLossAttack = 2;
 }
