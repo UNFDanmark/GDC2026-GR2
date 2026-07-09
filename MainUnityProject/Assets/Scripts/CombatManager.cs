@@ -162,12 +162,14 @@ public class CombatManager : MonoBehaviour
         {
             UseMendingMelody(cardData, (finalScoreAverage/10)+1);
         }
-        Destroy(cardData);
 
         if (cardData.cardType.HasFlag(CardType.agonizingAnthem))
         {
             UseAgonizingAnthem(cardData, (finalScoreAverage/10)+1);
         }
+        
+        
+        Destroy(cardData);
         print((finalScoreAverage/10)+1);
     }
 
@@ -274,6 +276,7 @@ public class CombatManager : MonoBehaviour
         currentEnemy.GetComponent<Enemy>().GetNextAttack();
         rhythmManager.notesQueue.AddRange(attack.GetComponent<EnemyAttack>().noteChart);
         enemyCurrentAttack.GetComponent<EnemyAttack>().sound.PlayDelayed(rhythmManager.currentSpeed);
+        GameObject.FindGameObjectWithTag("Larve").GetComponent<Animator>().SetBool("IsAttackingLarve", true);
     }
 
     private void UseEnemyAttackEffects(float finalScore)

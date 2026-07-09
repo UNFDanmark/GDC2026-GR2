@@ -154,7 +154,7 @@ public class CardMovement : MonoBehaviour
             newCardData.noteSpeed = cardData.noteSpeed;
             newCardData.cardType = cardData.cardType;
             combatManager.PlayCard(this.gameObject);
-            
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetBool("IsAttacking", true);
             //Audio
             
         
