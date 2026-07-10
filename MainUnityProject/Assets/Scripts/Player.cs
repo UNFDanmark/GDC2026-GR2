@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
 
     public void TurnStarted()
     {
-        GameObject.FindGameObjectWithTag("Larve").GetComponent<Animator>().SetBool("IsAttackingLarve", false);
+        GameObject.FindGameObjectWithTag("Larve")?.GetComponent<Animator>().SetBool("IsAttackingLarve", false);
         GameObject.FindGameObjectWithTag("Player")?.GetComponent<Animator>().SetBool("IsAttacking", false);
         DecreaseDurations();
         cardManager.DrawCard(1 + extraCardDraw);
