@@ -68,6 +68,7 @@ public class CombatManager : MonoBehaviour
         }
 
         if (!rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou &&
+            rhythmManager.notesQueue.Count == 0 &&
             !isEnemyAttacking && !isPlayersTurn && isPlayingPlayerRhythmGame)
         {
             UseCardEffects(rhythmManager.totalScore);
@@ -81,7 +82,7 @@ public class CombatManager : MonoBehaviour
             universalDelay = universalDelayAmount*rhythmManager.currentSpeed;
         }
 
-        if (universalDelay <= 0 && isEnemyAttacking && !rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou && !isPlayersTurn && !isPlayingPlayerRhythmGame)
+        if (universalDelay <= 0 && isEnemyAttacking && !rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou && rhythmManager.notesQueue.Count == 0 && !isPlayersTurn && !isPlayingPlayerRhythmGame)
         {
             if (isEnemyAttacking == true && !isPlayingPlayerRhythmGame)
             {
@@ -117,6 +118,7 @@ public class CombatManager : MonoBehaviour
         print("Use Card effects");
         float finalScoreAverage = finalScore / numberOfNotesInChart;
         CardData cardData = GetComponent<CardData>();
+        if (cardData == null) return; // no card was played this round (stray rhythm round) - nothing to apply
         float totalBlock;
         float totalLeech;
         int totalDrawnCards;
