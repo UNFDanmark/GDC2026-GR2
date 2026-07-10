@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //Go to SpawnedArrow line 7
 public class Player : MonoBehaviour
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour
     public void TurnStarted()
     {
         GameObject.FindGameObjectWithTag("Larve").GetComponent<Animator>().SetBool("IsAttackingLarve", false);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetBool("IsAttacking", false);
+        GameObject.FindGameObjectWithTag("Player")?.GetComponent<Animator>().SetBool("IsAttacking", false);
         DecreaseDurations();
         cardManager.DrawCard(1 + extraCardDraw);
         extraCardDraw = 0;
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
         health = Mathf.Clamp(health, 0, Single.PositiveInfinity);;
         if (health <= 0)
         {
-            print("Player Dead");
+            SceneManager.LoadScene(3);
         }
         print($"Enemy did {damage} damage");
     }

@@ -153,6 +153,12 @@ public class CardMovement : MonoBehaviour
             newCardData.noteAmount = cardData.noteAmount;
             newCardData.noteSpeed = cardData.noteSpeed;
             newCardData.cardType = cardData.cardType;
+            newCardData.bonusBlockIncreaseDuration = cardData.bonusBlockIncreaseDuration;
+            newCardData.decreaseEnemyDamage = cardData.decreaseEnemyDamage;
+            newCardData.decreaseEnemyDamageDuration = cardData.decreaseEnemyDamageDuration;
+            newCardData.decreaseEnemyDefense = cardData.decreaseEnemyDefense;
+            newCardData.decreaseEnemyDefenseDuration = cardData.decreaseEnemyDefenseDuration;
+        
             combatManager.PlayCard(this.gameObject);
             GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetBool("IsAttacking", true);
             //Audio
@@ -170,6 +176,7 @@ public class CardMovement : MonoBehaviour
             startCardDelayTimer = true;
             isBeingPlayed = true;
             cardManager.hand.Remove(gameObject);
+            rhythmManager.currentSpeed = cardData.noteSpeed;
             audioManager.PlayCardMelody(GetComponent<CardData>().cardMelody);
         }
     }

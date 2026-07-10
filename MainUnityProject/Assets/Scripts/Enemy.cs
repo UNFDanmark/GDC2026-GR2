@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class Enemy : MonoBehaviour
@@ -67,7 +68,7 @@ public class Enemy : MonoBehaviour
         health = Mathf.Clamp(health, 0, Single.PositiveInfinity);;
         if (health <= 0)
         {
-            print("Enemy Dead");
+            SceneManager.LoadScene(4);
         }
     }
 
@@ -83,16 +84,16 @@ public class Enemy : MonoBehaviour
     
     public void GetNextAttack()
     {
-        bigAttackCountdown -= 1;
-        if (bigAttackCountdown <= 0)
-        {
-            nextAttack = bigCardDeck[UnityEngine.Random.Range(0, bigCardDeck.Count)];
-            bigAttackCountdown = bigAttackCountdownAmount;
-        }
-        else
-        {
+        // bigAttackCountdown -= 1;
+        // if (bigAttackCountdown <= 0)
+        // {
+        //     nextAttack = bigCardDeck[UnityEngine.Random.Range(0, bigCardDeck.Count)];
+        //     bigAttackCountdown = bigAttackCountdownAmount;
+        // }
+        
+        
             nextAttack = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
-        }
+        
     }
 
     public void GiveDefenseDecrease(float decreaseAmount, int duration)
