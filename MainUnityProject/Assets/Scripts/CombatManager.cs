@@ -83,7 +83,7 @@ public class CombatManager : MonoBehaviour
 
         if (universalDelay <= 0 && isEnemyAttacking && !rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou && !isPlayersTurn && !isPlayingPlayerRhythmGame)
         {
-            if (isEnemyAttacking == true)
+            if (isEnemyAttacking == true && !isPlayingPlayerRhythmGame)
             {
                 UseEnemyAttackEffects(rhythmManager.totalScore);
                 rhythmManager.totalScore = 0;
@@ -162,12 +162,14 @@ public class CombatManager : MonoBehaviour
         {
             UseMendingMelody(cardData, (finalScoreAverage/10)+1);
         }
-        Destroy(cardData);
 
         if (cardData.cardType.HasFlag(CardType.agonizingAnthem))
         {
             UseAgonizingAnthem(cardData, (finalScoreAverage/10)+1);
         }
+        
+        
+        Destroy(cardData);
         print((finalScoreAverage/10)+1);
     }
 
@@ -273,7 +275,8 @@ public class CombatManager : MonoBehaviour
         enemyCurrentAttack = Instantiate(currentEnemy.GetComponent<Enemy>().nextAttack);
         currentEnemy.GetComponent<Enemy>().GetNextAttack();
         rhythmManager.notesQueue.AddRange(attack.GetComponent<EnemyAttack>().noteChart);
-        enemyCurrentAttack.GetComponent<EnemyAttack>().sound.PlayDelayed(rhythmManager.currentSpeed);
+        enemyCurrentAttack.GetComponent<EnemyAttack>().sound.PlayDelayed(1f / rhythmManager.currentSpeed);
+        GameObject.FindGameObjectWithTag("Larve").GetComponent<Animator>().SetBool("IsAttackingLarve", true);
     }
 
     private void UseEnemyAttackEffects(float finalScore)

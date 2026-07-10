@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
         if (playNextTick)
         {
             audioSource.clip = nextAudioClipToPlay;
-            audioSource.PlayDelayed(rhythmManger.universalCardPlayDelay+1);
+            audioSource.PlayDelayed(rhythmManger.universalCardPlayDelay+1f / rhythmManger.currentSpeed);
             print((rhythmManger.universalCardPlayDelay+rhythmManger.currentSpeed));//LINE UPPPPPPPPKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK i iont fuck with dis
             playNextTick = false;
         }
