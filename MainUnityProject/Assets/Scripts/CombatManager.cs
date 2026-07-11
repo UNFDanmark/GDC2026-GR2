@@ -68,6 +68,7 @@ public class CombatManager : MonoBehaviour
         }
 
         if (!rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou &&
+            rhythmManager.notesQueue.Count == 0 &&
             !isEnemyAttacking && !isPlayersTurn && isPlayingPlayerRhythmGame)
         {
             UseCardEffects(rhythmManager.totalScore);
@@ -81,7 +82,7 @@ public class CombatManager : MonoBehaviour
             universalDelay = universalDelayAmount*rhythmManager.currentSpeed;
         }
 
-        if (universalDelay <= 0 && isEnemyAttacking && !rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou && !isPlayersTurn && !isPlayingPlayerRhythmGame)
+        if (universalDelay <= 0 && isEnemyAttacking && !rhythmManager.isThereCurrentlyNotesOnTheBattlefieldRightNowAtThisTimeQuestionMarkPrettyPleaseAndThankYou && rhythmManager.notesQueue.Count == 0 && !isPlayersTurn && !isPlayingPlayerRhythmGame)
         {
             if (isEnemyAttacking == true && !isPlayingPlayerRhythmGame)
             {
@@ -117,6 +118,7 @@ public class CombatManager : MonoBehaviour
         print("Use Card effects");
         float finalScoreAverage = finalScore / numberOfNotesInChart;
         CardData cardData = GetComponent<CardData>();
+        if (cardData == null) return; // no card was played this round (stray rhythm round) - nothing to apply
         float totalBlock;
         float totalLeech;
         int totalDrawnCards;
@@ -130,47 +132,47 @@ public class CombatManager : MonoBehaviour
         float totalHealing = finalScore / numberOfNotesInChart * totalHealingPercent * player.bonusAttackIncrease + 1;
         if (cardData.cardType.HasFlag(CardType.powerRiff)) 
         {
-            UsePowerRiff(cardData, (finalScoreAverage/10)+1);
+            UsePowerRiff(cardData, (finalScoreAverage/5)+1);
         }
 
         if (cardData.cardType.HasFlag(CardType.healingTune))
         {
-            UseHealingTheme(cardData, (finalScoreAverage/10)+1);
+            UseHealingTheme(cardData, (finalScoreAverage/5)+1);
         }
 
         if (cardData.cardType.HasFlag(CardType.blockingBallad))
         {
-            UseBlockingBallad(cardData, (finalScoreAverage/10)+1);
+            UseBlockingBallad(cardData, (finalScoreAverage/5)+1);
         }
 
         if (cardData.cardType.HasFlag(CardType.leechingHook))
         {
-            UseLeechingHook(cardData, (finalScoreAverage/10)+1);
+            UseLeechingHook(cardData, (finalScoreAverage/5)+1);
         }
 
         if (cardData.cardType.HasFlag(CardType.drumDraw))
         {
-            UseDrumDraw(cardData, (finalScoreAverage/10)+1);
+            UseDrumDraw(cardData, (finalScoreAverage/5)+1);
         }
 
         if (cardData.cardType.HasFlag(CardType.ostinatoBeam))
         {
-            UseOstinatoBeam(cardData, (finalScoreAverage/10)+1);
+            UseOstinatoBeam(cardData, (finalScoreAverage/5)+1);
         }
 
         if (cardData.cardType.HasFlag(CardType.mendingMelody))
         {
-            UseMendingMelody(cardData, (finalScoreAverage/10)+1);
+            UseMendingMelody(cardData, (finalScoreAverage/5)+1);
         }
 
         if (cardData.cardType.HasFlag(CardType.agonizingAnthem))
         {
-            UseAgonizingAnthem(cardData, (finalScoreAverage/10)+1);
+            UseAgonizingAnthem(cardData, (finalScoreAverage/5)+1);
         }
         
         
         Destroy(cardData);
-        print((finalScoreAverage/10)+1);
+        print((finalScoreAverage/5)+1);
     }
 
     //Add new function for every card type
